@@ -11,7 +11,7 @@ git()
 dbb()
 heroku()
 
-app = Era()
+app = ERA()
 userbot = Userbot()
 
 
