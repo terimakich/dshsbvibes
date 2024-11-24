@@ -11,7 +11,7 @@ git()
 dbb()
 heroku()
 
-app = Tanu()
+app = Era()
 userbot = Userbot()
 
 
