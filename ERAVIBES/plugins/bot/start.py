@@ -108,45 +108,57 @@ async def start_pm(client, message: Message, _):
 async def testbot(client, message: Message, _):
     uptime = int(time.time() - _boot_)
     chat_id = message.chat.id
-    await message.reply_text(_["start_7"].format(get_readable_time(uptime)))
+    await message.reply_text(_["start_1"].format(get_readable_time(uptime)))
 
     return await add_served_chat(message.chat.id)
 
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
+    chat_id = message.chat.id
+    if config.PRIVATE_BOT_MODE == str(True):
+        if not await is_served_private_chat(message.chat.id):
+            await message.reply_text(
+                "This Bot's private mode has been enabled only my owner can use this if want to use in your chat so say my Owner to authorize your chat."
+            )
+            return await app.leave_chat(message.chat.id)
+    else:
+        await add_served_chat(chat_id)
     for member in message.new_chat_members:
         try:
             language = await get_lang(message.chat.id)
             _ = get_string(language)
-            if await is_banned_user(member.id):
-                try:
-                    await message.chat.ban_member(member.id)
-                except:
-                    pass
             if member.id == app.id:
-                if message.chat.type != ChatType.SUPERGROUP:
-                    await message.reply_text(_["start_4"])
+                chat_type = message.chat.type
+                if chat_type != ChatType.SUPERGROUP:
+                    await message.reply_text(_["start_5"])
                     return await app.leave_chat(message.chat.id)
-                if message.chat.id in await blacklisted_chats():
+                if chat_id in await blacklisted_chats():
                     await message.reply_text(
-                        _["start_5"].format(
-                            f"https://t.me/{app.username}?start=sudolist",
-                        ),
-                        disable_web_page_preview=True,
+                        _["start_6"].format(
+                            f"https://t.me/{app.username}?start=sudolist"
+                        )
                     )
-                    return await app.leave_chat(message.chat.id)
-
-                out = start_panel(_)
-                    caption=_["start_3"].format(
-                        message.from_user.first_name,
+                    return await app.leave_chat(chat_id)
+                userbot = await get_assistant(message.chat.id)
+                out = start_pannel(_)
+                await message.reply_text(
+                    _["start_2"].format(
                         app.mention,
-                        message.chat.title,
-                        app.mention,
+                        userbot.username,
+                        userbot.id,
                     ),
                     reply_markup=InlineKeyboardMarkup(out),
                 )
-                await add_served_chat(message.chat.id)
-                await message.stop_propagation()
-        except Exception as ex:
-            print(ex)
+            if member.id in config.OWNER_ID:
+                return await message.reply_text(
+                    _["start_3"].format(app.mention, member.mention)
+                )
+            if member.id in SUDOERS:
+                return await message.reply_text(
+                    _["start_4"].format(app.mention, member.mention)
+                )
+            return
+        except Exception:
+
+            return
