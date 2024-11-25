@@ -108,7 +108,8 @@ async def start_pm(client, message: Message, _):
 async def testbot(client, message: Message, _):
     uptime = int(time.time() - _boot_)
     chat_id = message.chat.id
-    await message.reply_text(_["start_1"].format(get_readable_time(uptime)))
+    await message.react("💘")
+    await message.reply_text(_["start_1"]))
 
     return await add_served_chat(message.chat.id)
 
