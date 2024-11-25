@@ -42,6 +42,9 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", None)
 #❖  Get it from http://dashboard.heroku.com/account
 HEROKU_API_KEY = getenv("HEROKU_API_KEY", None)
 
+# You can paste your cookies to https://batbin.me, save them, and get a link to paste here
+COOKIES = getenv("COOKIES", None)
+
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
     "https://github.com/IamDvis/DV-VIBES",
