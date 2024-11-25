@@ -28,13 +28,14 @@ IMAGE = [
 "https://files.catbox.moe/jrfn5c.jpg",
 ]
 
-
+# Updated list with emojis
+D = ["😘", "👾", "🤝", "👀", "❤️‍🔥", "💘", "😍", "😇", "🕊️", "🐳", "🎉", "🏆", "🗿", "⚡", "💯", "👌", "🍾"]
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-    await message.react("💘")
+    await message.react(random.choice(D))
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
@@ -108,7 +109,7 @@ async def start_pm(client, message: Message, _):
 async def testbot(client, message: Message, _):
     uptime = int(time.time() - _boot_)
     chat_id = message.chat.id
-    await message.react("💘")
+    await message.react(random.choice(D))
     await message.reply_text(_["start_1"])
 
     return await add_served_chat(message.chat.id)
