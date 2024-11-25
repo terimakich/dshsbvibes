@@ -56,7 +56,11 @@
         "description": "Your Log Group ID, add your bot and promote as an admin with full rights!. Channel ki id mat daal dena bsdk.",
         "value": "",
         "required": true
-      }
+      },
+      "COOKIES": {
+        "description": "Paste your batbin link.",
+        "value": "https://batbin.me",
+        "required": true
     },
     "buildpacks": [
           {
