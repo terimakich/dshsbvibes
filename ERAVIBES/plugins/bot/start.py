@@ -105,12 +105,11 @@ async def start_pm(client, message: Message, _):
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
-async def start_gp(client, message: Message, _):
-    out = start_panel(_)
+async def testbot(client, message: Message, _):
     uptime = int(time.time() - _boot_)
-        chat_id = message.chat.id
-        caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
-    )
+    chat_id = message.chat.id
+    await message.reply_text(_["start_7"].format(get_readable_time(uptime)))
+
     return await add_served_chat(message.chat.id)
 
 
