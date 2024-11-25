@@ -109,7 +109,7 @@ async def testbot(client, message: Message, _):
     uptime = int(time.time() - _boot_)
     chat_id = message.chat.id
     await message.react("💘")
-    await message.reply_text(_["start_1"]))
+    await message.reply_text(_["start_1"])
 
     return await add_served_chat(message.chat.id)
 
