@@ -21,7 +21,7 @@ async def chat_arvis(app, message):
             await message.reply_text(f"**Hello {name}, I am Duru. How can I help you today?**")
         else:
             query = message.text.split(' ', 1)[1]
-            MODEL = "gpt-3.5-turbo"
+            MODEL = "text-davinci-003"
             resp = openai.ChatCompletion.create(model=MODEL, messages=[{"role": "user", "content": query}],
                                                  temperature=0.2)
             response_text = resp['choices'][0]["message"]["content"]
