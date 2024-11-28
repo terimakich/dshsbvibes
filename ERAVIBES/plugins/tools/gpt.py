@@ -18,7 +18,7 @@ async def chat_arvis(app, message):
         await app.send_chat_action(message.chat.id, ChatAction.TYPING)
         name = message.from_user.first_name
         if len(message.command) < 2:
-            await message.reply_text(f"**Hello {name}, I am Duru. How can I help you today?**")
+            await message.reply_text(f"Hello {name}, I am Duru. How can I help you today?")
         else:
             query = message.text.split(' ', 1)[1]
             MODEL = "text-davinci-003"
@@ -27,4 +27,4 @@ async def chat_arvis(app, message):
             response_text = resp['choices'][0]["message"]["content"]
             await message.reply_text(response_text)
     except Exception as e:
-        await message.reply_text(f"**Error**: {e}")
+        await message.reply_text(f"Error: {e}")
