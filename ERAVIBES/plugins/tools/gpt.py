@@ -16,15 +16,18 @@ async def chat_arvis(app, message):
         # Get user query
         query = message.text.split(' ', 1)[1] if len(message.command) > 1 else "Hi!"
         
-        # Call the API dynamically using the configured GPT_API
+        # New OpenAI Chat API Call
         resp = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",  # Dynamically change if needed, e.g., from config
-            messages=[{"role": "user", "content": query}],
+            model="gpt-3.5-turbo",  # Change this to "gpt-4" if you want
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},  # Optional system prompt
+                {"role": "user", "content": query}
+            ],
             temperature=0.2
         )
         
-        # Get response from OpenAI
-        response = resp['choices'][0]['message']['content']
+        # Get response
+        response = resp.choices[0].message.content
         await message.reply_text(response)
     except Exception as e:
         await message.reply_text(f"Error: {e}")
