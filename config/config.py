@@ -43,10 +43,10 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = getenv("HEROKU_API_KEY", None)
 
 # You can paste your cookies to https://batbin.me, save them, and get a link to paste here
-COOKIES = getenv("COOKIES")
+COOKIES = getenv("COOKIES", None)
 
 # External APIs - Get these from their respective providers
-GPT_API = getenv("GPT_API")
+GPT_API = getenv("GPT_API", None)
 
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
