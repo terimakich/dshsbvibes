@@ -1,7 +1,7 @@
 import yt_dlp as youtube_dl
 from pyrogram import Client, filters
 from youtubesearchpython import VideosSearch
-form ERAVIBES import app
+from ERAVIBES import app
 
 def download_youtube_audio(url: str, download_path: str) -> str:
     ydl_opts = {
