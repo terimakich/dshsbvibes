@@ -13,7 +13,7 @@ async def logger(client, message, _):
     if len(message.command) != 2:
         return await message.reply_text(usage)
     state = message.text.split(None, 1)[1].strip().lower()
-    if state == "enable":
+    if state == ["enable", "on"]:
         await add_on(2)
         await message.reply_text(_["log_2"])
     elif state == "disable":
