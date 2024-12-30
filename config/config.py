@@ -17,10 +17,10 @@ OWNER_USERNAME = getenv("OWNER_USERNAME", "OfficialDurgesh")
 BOT_USERNAME = getenv("BOT_USERNAME", "DuruXbot")
 
 #❖  Don't Add style font 
-BOT_NAME = getenv("BOT_NAME", "ERA VIBES")
+BOT_NAME = getenv("BOT_NAME")
 
 #❖ get Your Assistant User name
-ASSUSERNAME = getenv("ASSUSERNAME", "ERA_ASS")
+ASSUSERNAME = getenv("ASSUSERNAME")
 
 #❖ Get your token from @BotFather on Telegram.
 BOT_TOKEN = getenv("BOT_TOKEN")
@@ -59,11 +59,11 @@ GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )  #❖ Fill this variable if your upstream repository is private
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/ai_image_junction")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/net_pro_max")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+7ehnJA3aMb84OGNl")
 
-#❖ Set this to True if you want the assistant to automatically leave chats after an interval
-AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", False))
+#❖ Set this to True if you want the assistant to automatically leave chats after an interval, not use False
+AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", "True"))
 
 
 #❖ Get this credentials from https://developer.spotify.com/dashboard
