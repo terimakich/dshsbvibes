@@ -16,7 +16,7 @@ try:
 
         # Initialize a temporary Pyrogram client to retrieve bot's username
         with Client(
-            "TannuMusic",
+            "EraVibes",
             bot_token=config.BOT_TOKEN,
             api_id=config.API_ID,
             api_hash=config.API_HASH,
