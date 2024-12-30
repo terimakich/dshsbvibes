@@ -9,7 +9,7 @@ from ERAVIBES.utils.database import (
     get_active_video_chats,
 )
 
-@app.on_message(filters.command(["activevoice","activevc"]) & SUDOERS)
+@app.on_message(filters.command(["activevoice","activevc", "avc"]) & SUDOERS)
 async def activevc(_, message: Message):
     mystic = await message.reply_text("ɢᴇᴛᴛɪɴɢ ᴀᴄᴛɪᴠᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ....ᴘʟᴇᴀsᴇ ʜᴏʟᴅ ᴏɴ")
     served_chats = await get_active_chats()
@@ -35,7 +35,7 @@ async def activevc(_, message: Message):
         )
 
 
-@app.on_message(filters.command(["activevideo","activevd"]) & SUDOERS)
+@app.on_message(filters.command(["activevideo","activevd", "av"]) & SUDOERS)
 async def activevi_(_, message: Message):
     mystic = await message.reply_text("ɢᴇᴛᴛɪɴɢ ᴀᴄᴛɪᴠᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ....ᴘʟᴇᴀsᴇ ʜᴏʟᴅ ᴏɴ")
     served_chats = await get_active_video_chats()
