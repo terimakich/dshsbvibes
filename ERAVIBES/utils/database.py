@@ -40,6 +40,15 @@ playmode = {}
 playtype = {}
 skipmode = {}
 
+
+async def is_commanddelete_on(chat_id: int) -> bool:
+    return chat_id not in command
+
+async def is_served_private_chat(chat_id: int) -> bool:
+    chat = await privatedb.find_one({"chat_id": chat_id})
+    if not chat:
+        return False
+
 async def add_wlcm(chat_id: int):
     return await wlcm.insert_one({"chat_id": chat_id})
 
