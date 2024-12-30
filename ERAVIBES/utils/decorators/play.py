@@ -14,7 +14,7 @@ from config import SUPPORT_CHAT
 from config import adminlist
 from strings import get_string
 from ERAVIBES import YouTube, app
-from ERAVIBES.core.call import _st_ as clean
+from ERAVIBES.core.call import _clear_ as clean
 from ERAVIBES.misc import SUDOERS
 from ERAVIBES.utils.database import (
     get_assistant,
