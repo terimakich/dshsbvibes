@@ -80,6 +80,13 @@ TG_AUDIO_FILESIZE_LIMIT = int(getenv("TG_AUDIO_FILESIZE_LIMIT", 104857600))
 TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", 1073741824))
 #❖ Checkout https://www.gbmb.org/mb-to-bytes for converting mb to bytes
 
+# Set it true if you want your bot to be private only [You'll need to allow CHAT_ID via /authorize command then only your bot will play music in that chat.]
+PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", "False")
+
+# If you want your bot to setup the commands automatically in the bot's menu set it to true.
+# Refer to https://i.postimg.cc/Bbg3LQTG/image.png
+SET_CMDS = getenv("SET_CMDS", "False")
+
 
 #❖ Get your pyrogram v2 session from @StringFatherBot on Telegram
 STRING1 = getenv("STRING_SESSION", None)
