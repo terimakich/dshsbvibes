@@ -45,7 +45,7 @@ gpytranslate
 search_engine_parser
 emojis
 cloudscraper
-#blackpink
+blackpink
 pycryptodome
 pickledb
 Faker
