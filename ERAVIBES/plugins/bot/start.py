@@ -113,6 +113,7 @@ async def start_pm(client, message: Message, _):
             )
 
 
+
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def testbot(client, message: Message, _):
@@ -123,15 +124,20 @@ async def testbot(client, message: Message, _):
         print(f"Reaction Error: {e}")
 
     try:
-        # Test reply message
+        # Create Inline keyboard button with link
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("𝗺𝘆 𝗼𝘄𝗻𝗲𝗿", url="https://t.me/OfficialDurgesh")]
+        ])
+
+        # Send message with inline keyboard
         await message.reply_text(
-            "Hᴇʏ ʙᴀʙʏ :) ɴᴇᴇᴅ ʜᴇʟᴘ? ʀᴇᴀᴄʜ ᴏᴜᴛ ᴛᴏ [𝗺𝘆 𝗼𝘄𝗻𝗲𝗿](https://t.me/OfficialDurgesh)",
-            disable_web_page_preview=True,
-            parse_mode="markdownv2"
+            "Hᴇʏ ʙᴀʙʏ :) ɴᴇᴇᴅ ʜᴇʟᴘ? ʀᴇᴀᴄʜ ᴏᴜᴛ ᴛᴏ 𝗺𝘆 𝗼𝘄𝗻𝗲𝗿",
+            reply_markup=keyboard
         )
         print("Reply sent successfully.")
     except Exception as e:
         print(f"Reply Error: {e}")
+
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
