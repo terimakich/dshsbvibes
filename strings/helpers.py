@@ -40,7 +40,7 @@ HELP_3 = """
 """
 
 HELP_4 = """
-<blockquote><b>❖ ᴄʜᴀᴛ ʙʟᴀᴄᴋʟɪsᴛ ғᴇᴀᴛᴜʀᴇ</b>➥</blockquote>
+<blockquote><b>❖ ʙʟᴀᴄᴋʟɪsᴛ ғᴇᴀᴛᴜʀᴇ</b>➥</blockquote>
 <blockquote>❍ /blacklistchat [ᴄʜᴀᴛ ɪᴅ] ➥ <i>ʙʟᴀᴄᴋʟɪsᴛ ᴀ ᴄʜᴀᴛ ғʀᴏᴍ ᴜsɪɴɢ ᴛʜᴇ ʙᴏᴛ.</i>
 ❍ /whitelistchat [ᴄʜᴀᴛ ɪᴅ] ➥ <i>ᴡʜɪᴛᴇʟɪsᴛ ᴛʜᴇ ʙʟᴀᴄᴋʟɪsᴛᴇᴅ ᴄʜᴀᴛ.</i>
 ❍ /blacklistedchat ➥ <i>sʜᴏᴡs ᴛʜᴇ ʟɪsᴛ ᴏғ ʙʟᴀᴄᴋʟɪsᴛᴇᴅ ᴄʜᴀᴛs.</i></blockquote>
@@ -77,7 +77,6 @@ HELP_5 = """
 
 HELP_6 = """
 <blockquote><b>❖ ᴩʟᴀʏ ᴄᴏᴍᴍᴀɴᴅs </b> ➥</blockquote>
-
 <blockquote><b>✦ c sᴛᴀɴᴅs ғᴏʀ ᴄʜᴀɴɴᴇʟ ᴘʟᴀʏ.</b>
 <b>✦ v sᴛᴀɴᴅs ғᴏʀ ᴠɪᴅᴇᴏ ᴘʟᴀʏ.</b>
 <b>✦ force sᴛᴀɴᴅs ғᴏʀ ғᴏʀᴄᴇ ᴘʟᴀʏ.</b></blockquote>
