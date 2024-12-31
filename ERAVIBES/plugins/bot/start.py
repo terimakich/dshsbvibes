@@ -132,6 +132,7 @@ async def testbot(client, message: Message, _):
         # Send message with inline keyboard
         await message.reply_text(
             "Hᴇʏ ʙᴀʙʏ :) ɴᴇᴇᴅ ʜᴇʟᴘ? ʀᴇᴀᴄʜ ᴏᴜᴛ ᴛᴏ 𝗺𝘆 𝗼𝘄𝗻𝗲𝗿",
+            quote=True,
             reply_markup=keyboard
         )
         print("Reply sent successfully.")
