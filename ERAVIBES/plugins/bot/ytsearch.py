@@ -6,11 +6,11 @@ from pyrogram import filters
 from config import BOT_USERNAME
 
 
-@app.on_message(filters.command("yt"))
+@app.on_message(filters.command("yt", prefixes=["/", "!", ".", ""]))
 async def ytsearch(_, message: Message):
     try:
         if len(message.command) < 2:
-            await message.reply_text("✦ /yt needs an argument babu!")
+            await message.reply_text("<blockquote>✦ /yt needs an argument babu!</blockquote>")
             return
         query = message.text.split(None, 1)[1]
         m = await message.reply_text("✦ searching....")
