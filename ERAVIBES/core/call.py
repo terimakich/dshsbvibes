@@ -86,7 +86,7 @@ async def _clear_(chat_id):
     try:
         AMBOT = await app.send_message(
                 chat_id,
-                f"**🎧 ꜱᴏɴɢ ʜᴀꜱ ᴇɴᴅᴇᴅ ɪɴ ᴠᴄ🥺**{text}",
+                f"**🎧 ꜱᴏɴɢ ʜᴀꜱ ᴇɴᴅᴇᴅ ɪɴ ᴠᴄ🥺**",
         )
         await asyncio.sleep(10)
         await AMBOT.delete()
