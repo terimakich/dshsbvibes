@@ -124,7 +124,7 @@ async def testbot(client, message: Message, _):
     except Exception as e:
         pass
 
-  try:
+    try:
         await message.reply_text(
             _["start_1"],
             disable_web_page_preview=True,
