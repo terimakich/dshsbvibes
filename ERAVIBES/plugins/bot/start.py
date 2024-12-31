@@ -116,24 +116,22 @@ async def start_pm(client, message: Message, _):
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def testbot(client, message: Message, _):
-    uptime = int(time.time() - _boot_)
-    chat_id = message.chat.id
-
     try:
-        # React with a random emoji
+        # React with random emoji
         await message.react(random.choice(D))
     except Exception as e:
-        print(f"Error in react: {e}")
+        print(f"Reaction Error: {e}")
 
     try:
-        # Send a start message
+        # Test reply message
         await message.reply_text(
-            _["start_1"],
+            "Hᴇʏ ʙᴀʙʏ :) ɴᴇᴇᴅ ʜᴇʟᴘ? ʀᴇᴀᴄʜ ᴏᴜᴛ ᴛᴏ [𝗺𝘆 𝗼𝘄𝗻𝗲𝗿](https://t.me/OfficialDurgesh)",
             disable_web_page_preview=True,
             parse_mode="markdown"
         )
+        print("Reply sent successfully.")
     except Exception as e:
-        print(f"Error in reply_text: {e}")
+        print(f"Reply Error: {e}")
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
