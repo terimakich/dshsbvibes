@@ -131,9 +131,8 @@ async def testbot(client, message: Message, _):
             parse_mode="markdown"
         )
 
-    # Add served chat and return
-    await add_served_chat(message.chat.id)
-
+     except Exception as e:
+         print(f"Error: {e}")
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
