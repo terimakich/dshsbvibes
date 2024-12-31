@@ -127,7 +127,7 @@ async def testbot(client, message: Message, _):
         await message.reply_text(
             "Hᴇʏ ʙᴀʙʏ :) ɴᴇᴇᴅ ʜᴇʟᴘ? ʀᴇᴀᴄʜ ᴏᴜᴛ ᴛᴏ [𝗺𝘆 𝗼𝘄𝗻𝗲𝗿](https://t.me/OfficialDurgesh)",
             disable_web_page_preview=True,
-            parse_mode="markdown"
+            parse_mode="markdownv2"
         )
         print("Reply sent successfully.")
     except Exception as e:
