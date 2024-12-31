@@ -76,7 +76,7 @@ HELP_5 = """
 """
 
 HELP_6 = """
-<blockquote><b>❖ ᴩʟᴀʏ & ᴄʜᴀɴɴᴇʟ ᴄᴏᴍᴍᴀɴᴅs </b> ➥</blockquote>
+<blockquote><b>❖ ᴩʟᴀʏ ᴄᴏᴍᴍᴀɴᴅs </b> ➥</blockquote>
 
 <blockquote><b>✦ c sᴛᴀɴᴅs ғᴏʀ ᴄʜᴀɴɴᴇʟ ᴘʟᴀʏ.</b>
 <b>✦ v sᴛᴀɴᴅs ғᴏʀ ᴠɪᴅᴇᴏ ᴘʟᴀʏ.</b>
@@ -97,7 +97,7 @@ HELP_7 = """
 """
 
 HELP_8 = """
-<blockquote><b>❍ sᴏɴɢ ᴅᴏᴡɴʟᴏᴀᴅ</b> ➥</blockquote>
+<blockquote><b>❖ sᴏɴɢ ᴅᴏᴡɴʟᴏᴀᴅ</b> ➥</blockquote>
 <blockquote>❍ /song [sᴏɴɢ ɴᴀᴍᴇ/ʏᴛ ᴜʀʟ] ➥ <i>ᴅᴏᴡɴʟᴏᴀᴅ ᴀɴʏ ᴛʀᴀᴄᴋ ғʀᴏᴍ ʏᴏᴜᴛᴜʙᴇ ɪɴ ᴍᴘ3 ᴏʀ ᴍᴘ4 ғᴏʀᴍᴀᴛs.</i></blockquote>
 
 <blockquote>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ @EraVibesXbot</blockquote>
@@ -107,7 +107,6 @@ HELP_9 = """
 <blockquote><b>❖ sᴘᴇᴇᴅ ᴄᴏᴍᴍᴀɴᴅs</b> ➥</blockquote>
 <blockquote>❍ /speed or /playback ➥ <i>ғᴏʀ ᴀᴅᴊᴜsᴛɪɴɢ ᴛʜᴇ ᴀᴜᴅɪᴏ ᴘʟᴀʏʙᴀᴄᴋ sᴘᴇᴇᴅ ɪɴ ɢʀᴏᴜᴘ.</i>
 ❍ /cspeed or /cplayback ➥ <i>ғᴏʀ ᴀᴅᴊᴜsᴛɪɴɢ ᴛʜᴇ ᴀᴜᴅɪᴏ ᴘʟᴀʏʙᴀᴄᴋ sᴘᴇᴇᴅ ɪɴ ᴄʜᴀɴɴᴇʟ.</i></blockquote>
-
 
 <blockquote>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ @EraVibesXbot</blockquote>
 """
