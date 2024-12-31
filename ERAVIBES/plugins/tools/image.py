@@ -7,7 +7,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InputMediaPhoto, Message
 from ERAVIBES import app
 
-@app.on_message(filters.command(["img", "image"], prefixes=["/", "!"]))
+@app.on_message(filters.command(["img", "image"], prefixes=["/", "!", "", "."]))
 async def google_img_search(client: Client, message: Message):
     chat_id = message.chat.id
     command_message_id = message.id  # ID of the command message
