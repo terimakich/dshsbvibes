@@ -124,10 +124,12 @@ async def testbot(client, message: Message, _):
     except Exception as e:
         pass
 
-    # Sending the reply message
-    await message.reply_text(
-        _["start_1"].format(config.OWNER_ID), reply_markup=keyboard
-    )
+  try:
+        await message.reply_text(
+            _["start_1"],
+            disable_web_page_preview=True,
+            parse_mode="markdown"
+        )
 
     # Add served chat and return
     await add_served_chat(message.chat.id)
