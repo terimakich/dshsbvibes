@@ -118,21 +118,22 @@ async def start_pm(client, message: Message, _):
 async def testbot(client, message: Message, _):
     uptime = int(time.time() - _boot_)
     chat_id = message.chat.id
-    
-    try:
-        await message.react(random.choice(D))
-    except Exception as e:
-        pass
 
     try:
+        # React with a random emoji
+        await message.react(random.choice(D))
+    except Exception as e:
+        print(f"Error in react: {e}")
+
+    try:
+        # Send a start message
         await message.reply_text(
             _["start_1"],
             disable_web_page_preview=True,
             parse_mode="markdown"
         )
-
-     except Exception as e:
-         print(f"Error: {e}")
+    except Exception as e:
+        print(f"Error in reply_text: {e}")
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
