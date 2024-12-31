@@ -23,8 +23,8 @@ async def ytsearch(_, message: Message):
             text += f"● ᴠɪᴅᴇᴏ ᴅᴜʀᴀᴛɪᴏɴ ➥ {results[i]['duration']}\n"
             text += f"● ᴠɪᴅᴇᴏ ᴠɪᴇᴡs ➥ {results[i]['views']}\n"
             text += f"● ᴠɪᴅᴇᴏ ᴄʜᴀɴɴᴇʟ ➥ {results[i]['channel']}\n"
-            text += f"● ᴠɪᴅᴇᴏ ᴜʀʟ ➥ https://www.youtube.com{results[i]['url_suffix']}\n\n"
-            text += "</blockquote>"
+            text += f"● ᴠɪᴅᴇᴏ ᴜʀʟ ➥ https://www.youtube.com{results[i]['url_suffix']}"
+            text += "</blockquote>\n"
             i += 1
         await m.edit(text, disable_web_page_preview=True)
     except Exception as e:
