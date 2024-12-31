@@ -118,17 +118,19 @@ async def start_pm(client, message: Message, _):
 async def testbot(client, message: Message, _):
     uptime = int(time.time() - _boot_)
     chat_id = message.chat.id
+    
     try:
         await message.react(random.choice(D))
     except Exception as e:
         pass
-        
-    #await message.reply_text(_["start_1"])
-     await message.reply_text(
-        _["start_1"].format(config.OWNER_ID), reply_markup=keyboard
-)
 
-    return await add_served_chat(message.chat.id)
+    # Sending the reply message
+    await message.reply_text(
+        _["start_1"].format(config.OWNER_ID), reply_markup=keyboard
+    )
+
+    # Add served chat and return
+    await add_served_chat(message.chat.id)
 
 
 @app.on_message(filters.new_chat_members, group=-1)
