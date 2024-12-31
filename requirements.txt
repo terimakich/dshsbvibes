@@ -3,6 +3,7 @@ openai
 aiofiles
 aiohttp
 asyncio
+gitpython
 requests
 unidecode
 python-dotenv
@@ -39,7 +40,6 @@ git+https://github.com/joetats/youtube_search@master
 #lyricsgenius
 #tgcrypto
 #blackpink
-#gitpython
 #hachoir
 #pyshorteners
 #gunicorn==22.0.0
