@@ -126,7 +126,7 @@ async def testbot(client, message: Message, _):
     try:
         # Create Inline keyboard button with link
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("𝗺𝘆 𝗼𝘄𝗻𝗲𝗿", url="https://t.me/OfficialDurgesh")]
+            [InlineKeyboardButton("𝗺𝘆 𝗼𝘄𝗻𝗲𝗿", url="https://t.me/DvisDmBot?start")]
         ])
 
         # Send message with inline keyboard
