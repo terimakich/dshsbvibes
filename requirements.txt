@@ -9,6 +9,7 @@ unidecode
 python-dotenv
 speedtest-cli
 spotipy
+pycryptodome
 urllib3
 uvloop
 flask
@@ -51,7 +52,7 @@ git+https://github.com/joetats/youtube_search@master
 #gpytranslate
 #search_engine_parser
 #cloudscraper
-#pycryptodome
+
 #pickledb
 #Faker
 #pyfiglet
