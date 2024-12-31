@@ -18,9 +18,7 @@ async def ytsearch(_, message: Message):
         i = 0
         text = ""
         while i < 5:
-            text += "<blockquote>"
-            text += f"❖ ᴠɪᴅᴇᴏ ɴᴀᴍᴇ ➥ {results[i]['title']}\n"
-            text += "</blockquote>"
+            text += f"<blockquote>❖ ᴠɪᴅᴇᴏ ɴᴀᴍᴇ ➥ {results[i]['title']}</blockquote>"
             text += "<blockquote>"
             text += f"● ᴠɪᴅᴇᴏ ᴅᴜʀᴀᴛɪᴏɴ ➥ {results[i]['duration']}\n"
             text += f"● ᴠɪᴅᴇᴏ ᴠɪᴇᴡs ➥ {results[i]['views']}\n"
