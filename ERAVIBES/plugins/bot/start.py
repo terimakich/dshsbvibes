@@ -124,7 +124,9 @@ async def testbot(client, message: Message, _):
         pass
         
     #await message.reply_text(_["start_1"])
-     await message.reply_text(_["start_1"].format(config.OWNER_ID)reply_markup=keyboard)
+     await message.reply_text(
+    _["start_1"].format(config.OWNER_ID), reply_markup=keyboard
+)
 
     return await add_served_chat(message.chat.id)
 
