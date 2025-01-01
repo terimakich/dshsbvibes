@@ -162,7 +162,7 @@ str_2 : "❖ ᴠᴀʟɪᴅ sᴛʀᴇᴀᴍ ᴠᴇʀɪғɪᴇᴅ.\n\n● ᴘʀᴏ
 str_3 : "❖ ғᴀɪʟᴇᴅ ᴛᴏ sᴛʀᴇᴀᴍ ʏᴏᴜᴛᴜʙᴇ ʟɪᴠᴇ sᴛʀᴇᴀᴍ, ɴᴏ ʟɪᴠᴇ ꜰᴏʀᴍᴀᴛ ꜰᴏᴜɴᴅ."
 
 ping_1 : "❖ {0} ɪs ᴘɪɴɢɪɴɢ..."
-ping_2 : "<blockquote><b>🏓Eʀᴀ Vɪʙᴇs ɪs ᴀʟɪᴠᴇ ʙᴀʙʏ</b></blockquote>\n<blockquote>╭✠──────⊱◈◈◈⊰──────✠╮\n│<b>● ᴘɪɴɢ  ➥</b>  <code>{0}ᴍs</code>\n│<b>● ᴜᴘᴛɪᴍᴇ ➥</b> {2}\n│● ʀᴀᴍ  ➥ {3}\n│<b>● ᴄᴘᴜ ➥</b> {4}\n│<b>● ᴅɪsᴋ ➥</b> {5}\n│<b>● ᴘʏ-ᴛɢᴄᴀʟʟs ➥</b> <code>{6}ᴍs</code>\n╰✠──────⊱◈◈◈⊰──────✠╯</blockquote>\n<blockquote><b>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥</b> @EraVibesXbot</blockquote>"
+ping_2 : "<blockquote><b>🏓 Eʀᴀ Vɪʙᴇs ɪs ᴀʟɪᴠᴇ ʙᴀʙʏ</b></blockquote>\n<blockquote>╭✠──────⊱◈◈◈⊰──────✠╮\n│<b>● ᴘɪɴɢ  ➥</b>  <code>{0}ᴍs</code>\n│<b>● ᴜᴘᴛɪᴍᴇ ➥</b> {2}\n│● ʀᴀᴍ  ➥ {3}\n│<b>● ᴄᴘᴜ ➥</b> {4}\n│<b>● ᴅɪsᴋ ➥</b> {5}\n│<b>● ᴘʏ-ᴛɢᴄᴀʟʟs ➥</b> <code>{6}ᴍs</code>\n╰✠──────⊱◈◈◈⊰──────✠╯</blockquote>\n<blockquote><b>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥</b> @EraVibesXbot</blockquote>"
 
 queue_1 : "❖ ғᴇᴛᴄʜɪɴɢ ǫᴜᴇᴜᴇ...\n\nᴘʟᴇᴀsᴇ ᴡᴀɪᴛ..."
 queue_2 : "❖ ǫᴜᴇᴜᴇ ᴇᴍᴘᴛʏ."
