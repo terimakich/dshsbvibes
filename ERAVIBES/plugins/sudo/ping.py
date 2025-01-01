@@ -24,7 +24,7 @@ async def ping(client, message: Message):
         print(f"Reaction Error: {e}")
 
     start = datetime.now()
-    response = await message.reply_photo(
+    response = await message.reply_text(
         caption=get_string(lang)["ping_1"].format(app.mention),  # Pass lang to get_string
     )
     pytgping = await ERA.ping()
