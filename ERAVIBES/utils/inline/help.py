@@ -16,7 +16,7 @@ def support_group_markup(_):
                     url=SUPPORT_CHAT,
                 ),
                 InlineKeyboardButton(
-                    text=_["S_B_2"],
+                    text=_["S_B_6"],
                     url=SUPPORT_CHANNEL,
                 ),
             ]
