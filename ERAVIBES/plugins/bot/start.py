@@ -181,12 +181,6 @@ async def welcome(client, message: Message):
                 )
                 continue
 
-            # Handle SUDOERS joining
-            if member.id in SUDOERS:
-                await message.reply_text(
-                    _["start_8"].format(client.mention, member.mention)
-                )
-                continue
 
         except Exception as e:
             logger.error(f"Error: {e}\nTraceback: {traceback.format_exc()}")
