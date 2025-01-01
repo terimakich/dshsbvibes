@@ -20,12 +20,12 @@ from ERAVIBES.utils.database import (
 )
 from ERAVIBES.utils.inline import botplaylist_markup
 from config import PLAYLIST_IMG_URL, SUPPORT_CHAT, adminlist
-from strings import get_string
+from strings import strings
 links = {}
 def PlayWrapper(command):
     async def wrapper(client, message):
         language = await get_lang(message.chat.id)
-        _ = get_string(language)
+        _ = strings(language)
         if message.sender_chat:
             upl = InlineKeyboardMarkup(
                 [
