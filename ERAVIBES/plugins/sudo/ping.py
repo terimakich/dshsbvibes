@@ -8,10 +8,10 @@ from ERAVIBES import app
 from ERAVIBES.core.call import ERA
 from ERAVIBES.utils import bot_sys_stats
 from ERAVIBES.utils.decorators.language import language
-#from ERAVIBES.utils.inline import support_group_markup
+from ERAVIBES.utils.inline import support_group_markup
 
 
-@app.on_message(filters.command(["ping", "alive"]) & ~BANNED_USERS)
+@app.on_message(filters.command(["ping", "alive"], prefixes=["/", "!", ".", ""]) & ~BANNED_USERS)
 @language
 async def ping_com(client, message: Message, _):
     response = await message.reply_text(
@@ -31,5 +31,5 @@ async def ping_com(client, message: Message, _):
             DISK,
             pytgping,
         ),
-       # reply_markup=support_group_markup(_),
+        reply_markup=support_group_markup(_),
     )
