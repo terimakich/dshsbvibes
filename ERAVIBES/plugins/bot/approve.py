@@ -6,7 +6,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 EVAA = [
     [
-        InlineKeyboardButton(text="ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ", url=f"https://t.me/DuruXbot?startgroup=true"),
+        InlineKeyboardButton(text="• ᴧᴅᴅ мᴇ ʙᴧʙʏ •", url=f"https://t.me/DuruXbot?startgroup=true"),
     ],
 ]
 
