@@ -23,12 +23,12 @@ async def ping(client, message: Message, lang):
 
     start = datetime.now()
     response = await message.reply_text(
-        text=get_string(lang)["ping_1"].format(app.mention),  # Use 'text' instead of 'caption'
+        text=get_string(get_lang)["ping_1"].format(app.mention),
     )
     pytgping = await ERA.ping()
     UP, CPU, RAM, DISK = await bot_sys_stats()
     resp = (datetime.now() - start).microseconds / 1000
     await response.edit_text(
-        text=get_string(lang)["ping_2"].format(resp, app.mention, UP, RAM, CPU, DISK, pytgping),
+        text=get_string(get_lang)["ping_2"].format(resp, app.mention, UP, RAM, CPU, DISK, pytgping),
         reply_markup=supp_markup(),
     )
