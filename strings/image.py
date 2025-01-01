@@ -1,4 +1,4 @@
-IMAGE = [
+image = [
 "https://files.catbox.moe/ciqfdq.jpg",
 "https://files.catbox.moe/jrfn5c.jpg",
 "https://files.catbox.moe/tb20q7.jpg",
