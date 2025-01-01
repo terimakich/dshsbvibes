@@ -162,7 +162,7 @@ str_2 : "❖ ᴠᴀʟɪᴅ sᴛʀᴇᴀᴍ ᴠᴇʀɪғɪᴇᴅ.\n\n● ᴘʀᴏ
 str_3 : "❖ ғᴀɪʟᴇᴅ ᴛᴏ sᴛʀᴇᴀᴍ ʏᴏᴜᴛᴜʙᴇ ʟɪᴠᴇ sᴛʀᴇᴀᴍ, ɴᴏ ʟɪᴠᴇ ꜰᴏʀᴍᴀᴛ ꜰᴏᴜɴᴅ."
 
 ping_1 : "❖ {0} ɪs ᴘɪɴɢɪɴɢ..."
-ping_2 : "❖ 🏓Eʀᴀ Vɪʙᴇs ɪs ᴀʟɪᴠᴇ ʙᴀʙʏ ⏤‌★\n\n╭✠──────⊱◈◈◈⊰──────✠╮\n│● ᴘɪɴɢ  ➥  <code>{0}ᴍs</code>\n│● ᴜᴘᴛɪᴍᴇ ➥ {2}\n│● ʀᴀᴍ  ➥ {3}\n│● ᴄᴘᴜ ➥ {4}\n│● ᴅɪsᴋ ➥ {5}\n│● ᴘʏ-ᴛɢᴄᴀʟʟs ➥ <code>{6}ᴍs</code>\n╰✠──────⊱◈◈◈⊰──────✠╯\n\n❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ ˹ᴅᴜʀɢᴇsʜ™ ♡゙"
+ping_2 : "<blockquote>🏓Eʀᴀ Vɪʙᴇs ɪs ᴀʟɪᴠᴇ ʙᴀʙʏ</blockquote>\n<blockquote>╭✠──────⊱◈◈◈⊰──────✠╮\n│● ᴘɪɴɢ  ➥  <code>{0}ᴍs</code>\n│● ᴜᴘᴛɪᴍᴇ ➥ {2}\n│● ʀᴀᴍ  ➥ {3}\n│● ᴄᴘᴜ ➥ {4}\n│● ᴅɪsᴋ ➥ {5}\n│● ᴘʏ-ᴛɢᴄᴀʟʟs ➥ <code>{6}ᴍs</code>\n╰✠──────⊱◈◈◈⊰──────✠╯\n</blockquote>\n<blockquote>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ @EraVibesXbot</blockquote>"
 
 queue_1 : "❖ ғᴇᴛᴄʜɪɴɢ ǫᴜᴇᴜᴇ...\n\nᴘʟᴇᴀsᴇ ᴡᴀɪᴛ..."
 queue_2 : "❖ ǫᴜᴇᴜᴇ ᴇᴍᴘᴛʏ."
@@ -174,7 +174,7 @@ queue_7 : "\n❖ ᴄʟɪᴄᴋ ᴏɴ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴛᴏ ɢᴇ
 queue_8 : "<b>❖ {0} ᴘʟᴀʏᴇʀ</b> ❖\n\n● <b>sᴛʀᴇᴀᴍɪɴɢ ➥</b> {1}\n\n● <b>sᴛʀᴇᴀᴍ ᴛʏᴘᴇ ➥</b> {2}\n● <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ ➥</b> {3}\n{4}"
 
 stream_1 : "<b><blockquote>❖ sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ</b></blockquote>\n<blockquote><b>⬤ ᴛɪᴛʟᴇ ➥</b> <a href={0}>{1}</a>\n<b>⬤ ᴅᴜʀᴀᴛɪᴏɴ ➥</b> {2} ᴍɪɴᴜᴛᴇs\n<b>⬤ ʙʏ ➥</b> {3}</blockquote>\n<blockquote><b>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ @EraVibesXbot</b></blockquote>"
-stream_2 : "<b><blockquote>❖ sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ</b></blockquote>\n<blockquote><b>⬤ sᴛʀᴇᴀᴍ ᴛʏᴘᴇ ➥</b> ʟɪᴠᴇ sᴛʀᴇᴀᴍ [ᴜʀʟ]\n<b>● ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ ➥</b> {0}</blockquote>\n<blockquote><b>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ ˹ ᴅᴜʀɢᴇsʜ™ ♡゙</b></blockquote>"
+stream_2 : "<b><blockquote>❖ sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ</b></blockquote>\n<blockquote><b>⬤ sᴛʀᴇᴀᴍ ᴛʏᴘᴇ ➥</b> ʟɪᴠᴇ sᴛʀᴇᴀᴍ [ᴜʀʟ]\n<b>● ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ ➥</b> {0}</blockquote>\n<blockquote><b>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ @EraVibesXbot</b></blockquote>"
 
 
 CLOSE_BUTTON  : "〆 ᴄʟᴏsᴇ 〆"
