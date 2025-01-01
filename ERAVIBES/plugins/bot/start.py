@@ -14,6 +14,7 @@ from ERAVIBES.plugins.sudo.sudoers import sudoers_list
 from ERAVIBES.utils.database import (
     add_served_chat,
     add_served_user,
+    get_assistant,
     blacklisted_chats,
     get_lang,
     is_banned_user,
