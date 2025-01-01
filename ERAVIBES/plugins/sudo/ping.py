@@ -12,7 +12,7 @@ from strings import get_string
 
 
 @app.on_message(filters.command(["ping", "alive"]) & ~BANNED_USERS)
-async def ping(client, message: Message, _):
+async def ping(client, message: Message):
     try:
         # React with random emoji
         await message.react(random.choice(D))
