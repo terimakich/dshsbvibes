@@ -21,7 +21,7 @@ from ERAVIBES.utils.decorators.language import LanguageStart
 from ERAVIBES.utils.formatters import get_readable_time
 from ERAVIBES.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
-from strings import get_string
+from strings import strings
 
 IMAGE = [
 "https://files.catbox.moe/ciqfdq.jpg",
@@ -154,7 +154,7 @@ async def welcome(client, message: Message):
     for member in message.new_chat_members:
         try:
             language = await get_lang(message.chat.id)
-            _ = get_string(language)
+            _ = strings(language)
             if member.id == app.id:
                 chat_type = message.chat.type
                 if chat_type != ChatType.SUPERGROUP:
