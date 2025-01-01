@@ -20,7 +20,7 @@ from ERAVIBES.utils.database import (
 from ERAVIBES.utils.decorators.language import LanguageStart
 from ERAVIBES.utils.formatters import get_readable_time
 from ERAVIBES.utils.inline import help_pannel, private_panel, start_pannel
-from config import BANNED_USERS, D
+from config import BANNED_USERS, START_IMG_URL, D
 from strings import get_string, image
 
 
