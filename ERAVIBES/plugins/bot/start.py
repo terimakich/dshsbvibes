@@ -125,52 +125,67 @@ async def testbot(client, message: Message, _):
         print(f"Reply Error: {e}")
 
 
-@app.on_message(filters.new_chat_members, group=-1)
+@app.on_message(filters.new_chat_members, group=3)
 async def welcome(client, message: Message):
     chat_id = message.chat.id
+
+    # Private bot mode check
     if config.PRIVATE_BOT_MODE == str(True):
-        if not await is_served_private_chat(message.chat.id):
+        if not await is_served_private_chat(chat_id):
             await message.reply_text(
-                "This Bot's private mode has been enabled only my owner can use this if want to use in your chat so say my Owner to authorize your chat."
+                "**ᴛʜɪs ʙᴏᴛ's ᴘʀɪᴠᴀᴛᴇ ᴍᴏᴅᴇ ʜᴀs ʙᴇᴇɴ ᴇɴᴀʙʟᴇᴅ. ᴏɴʟʏ ᴍʏ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs. ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ɪᴛ ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ, ᴀsᴋ ᴍʏ ᴏᴡɴᴇʀ ᴛᴏ ᴀᴜᴛʜᴏʀɪᴢᴇ ʏᴏᴜʀ ᴄʜᴀᴛ.**"
             )
-            return await app.leave_chat(message.chat.id)
+            return await client.leave_chat(chat_id)
     else:
         await add_served_chat(chat_id)
+
+    # Handle new chat members
     for member in message.new_chat_members:
         try:
-            language = await get_lang(message.chat.id)
+            language = await get_lang(chat_id)
             _ = get_string(language)
-            if member.id == app.id:
-                chat_type = message.chat.type
-                if chat_type != ChatType.SUPERGROUP:
-                    await message.reply_text(_["start_5"])
-                    return await app.leave_chat(message.chat.id)
-                if chat_id in await blacklisted_chats():
-                    await message.reply_text(
-                        _["start_6"].format(
-                            f"https://t.me/{app.username}?start=sudolist"
-                        )
+
+            # If bot itself joins the chat
+            if member.id == client.id:
+                try:
+                    groups_photo = await client.download_media(
+                        message.chat.photo.big_file_id, file_name=f"chatpp{chat_id}.png"
                     )
-                    return await app.leave_chat(chat_id)
-                userbot = await get_assistant(message.chat.id)
+                    chat_photo = groups_photo if groups_photo else START_IMG_URL
+                except AttributeError:
+                    chat_photo = START_IMG_URL
+
+                userbot = await get_assistant(chat_id)
                 out = start_pannel(_)
-                await message.reply_text(
-                    _["start_2"].format(
-                        app.mention,
-                        userbot.username,
-                        userbot.id,
-                    ),
+                await message.reply_photo(
+                    photo=chat_photo,
+                    caption=_["start_9"],
                     reply_markup=InlineKeyboardMarkup(out),
                 )
+
+            # Handle owner joining
             if member.id in config.OWNER_ID:
                 return await message.reply_text(
-                    _["start_3"].format(app.mention, member.mention)
+                    _["start_7"].format(client.mention, member.mention)
                 )
+
+            # Handle SUDOERS joining
             if member.id in SUDOERS:
                 return await message.reply_text(
-                    _["start_4"].format(app.mention, member.mention)
+                    _["start_8"].format(client.mention, member.mention)
                 )
             return
-        except Exception:
 
+        except Exception as e:
+            print(f"Error: {e}")
             return
+
+
+@app.on_callback_query(filters.regex("go_to_start"))
+@LanguageStart
+async def go_to_home(client, callback_query: CallbackQuery, _):
+    out = music_start_panel(_)
+    await callback_query.message.edit_text(
+        text=_["start_9"].format(callback_query.message.from_user.mention, app.mention),
+        reply_markup=InlineKeyboardMarkup(out),
+    )
