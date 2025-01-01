@@ -170,19 +170,25 @@ async def welcome(client, message: Message):
                     reply_markup=InlineKeyboardMarkup(out),
                 )
 
-            # Handle owner joining
+    # Handle owner joining
+    if isinstance(config.OWNER_ID, int):
+        config.OWNER_ID = [config.OWNER_ID]
             if member.id in config.OWNER_ID:
                 await message.reply_text(
                     _["start_7"].format(client.mention, member.mention)
                 )
                 continue
+                
 
-            # Handle SUDOERS joining
+    # Handle SUDOERS joining
+    if isinstance(SUDOERS, int):
+        SUDOERS = [SUDOERS]
             if member.id in SUDOERS:
                 await message.reply_text(
                     _["start_8"].format(client.mention, member.mention)
                 )
                 continue
+                
 
         except Exception as e:
             logger.error(f"Error: {e}\nTraceback: {traceback.format_exc()}")
