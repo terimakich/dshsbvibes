@@ -14,23 +14,21 @@ from strings import get_string
 
 
 @app.on_message(filters.command(["ping", "alive"]) & ~BANNED_USERS)
-async def ping(client, message: Message):
-    lang = await get_lang(message.chat.id)  # Fetch language for the user
-
+@language
+async def ping(client, message: Message, lang):
     try:
-        # React with random emoji
         await message.react(random.choice(D))
     except Exception as e:
         print(f"Reaction Error: {e}")
 
     start = datetime.now()
     response = await message.reply_text(
-        caption=get_string(lang)["ping_1"].format(app.mention),  # Pass lang to get_string
+        text=get_string(lang)["ping_1"].format(app.mention),  # Use 'text' instead of 'caption'
     )
     pytgping = await ERA.ping()
     UP, CPU, RAM, DISK = await bot_sys_stats()
     resp = (datetime.now() - start).microseconds / 1000
     await response.edit_text(
-        get_string(lang)["ping_2"].format(resp, app.mention, UP, RAM, CPU, DISK, pytgping),  # Pass lang to get_string
+        text=get_string(lang)["ping_2"].format(resp, app.mention, UP, RAM, CPU, DISK, pytgping),
         reply_markup=supp_markup(),
     )
