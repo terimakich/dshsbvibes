@@ -12,7 +12,7 @@ def fetch_song(song_name):
         print(f"API Error: {e}")
         return None
 
-@app.on_message(filters.command("song"))
+@app.on_message(filters.command("song", prefixes=["/", "!", ".", ""]))
 async def handle_song(client, message):
     song_name = message.text.split(" ", 1)[1] if len(message.text.split(" ", 1)) > 1 else None
     if not song_name:
@@ -31,8 +31,9 @@ async def handle_song(client, message):
             if chunk:
                 file.write(chunk)
 
-    caption = (f"""❖ sᴏɴɢ ɴᴀᴍᴇ ➥ {song_info['trackName']}\n\n● ᴀʟʙᴜᴍ ➥ {song_info['album']}\n ● ʀᴇʟᴇᴀsᴇ ᴅᴀᴛᴇ ➥ {song_info['releaseDate']}\n● ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ ➥ {message.from_user.mention}\n❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ  ➥ ˹ ᴇʀᴀ ꭙ ᴠɪʙᴇs™ ♡゙""")
+    caption = (f"""<blockquote>❖ sᴏɴɢ ɴᴀᴍᴇ ➥ {song_info['trackName']}</blockquote>\n<blockquote>● ᴀʟʙᴜᴍ ➥ {song_info['album']}\n● ʀᴇʟᴇᴀsᴇ ᴅᴀᴛᴇ ➥ {song_info['releaseDate']}\n● ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ ➥ {message.from_user.mention}</blockquote>\n<blockquote>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ @EraVibesXbot </blockquote>""")
 
     # Send audio and clean up
     await message.reply_audio(audio=open(filename, "rb"), caption=caption)
     os.remove(filename)
+# ˹ ᴇʀᴀ ꭙ ᴠɪʙᴇs™ ♡゙
