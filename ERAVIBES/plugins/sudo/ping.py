@@ -31,5 +31,5 @@ async def ping_com(client, message: Message, _):
             DISK,
             pytgping,
         ),
-        reply_markup=support_group_markup(_),
+       # reply_markup=support_group_markup(_),
     )
