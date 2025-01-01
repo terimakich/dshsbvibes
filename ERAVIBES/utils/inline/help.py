@@ -2,7 +2,27 @@ from typing import Union
 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from config import SUPPORT_CHAT, SUPPORT_CHANNEL
 from ERAVIBES import app
+
+
+
+def support_group_markup(_):
+    upl = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text=_["S_B_2"],
+                    url=SUPPORT_CHAT,
+                ),
+                InlineKeyboardButton(
+                    text=_["S_B_2"],
+                    url=SUPPORT_CHANNEL,
+                ),
+            ]
+        ]
+    )
+    return upl
 
 
 def help_pannel(_, START: Union[bool, int] = None):
