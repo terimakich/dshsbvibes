@@ -9,7 +9,7 @@ from ERAVIBES.utils.database import get_lang
 from ERAVIBES.utils.decorators.language import LanguageStart, languageCB
 from ERAVIBES.utils.inline.help import help_back_markup, private_help_panel
 from config import BANNED_USERS, START_IMG_URL, SUPPORT_CHAT
-from strings import get_string, helpers
+from strings import strings, helpers
 
 AVISHA = [
 "https://graph.org/file/eaa3a2602e43844a488a5.jpg",
@@ -41,7 +41,7 @@ async def helper_private(
             pass
         chat_id = update.message.chat.id
         language = await get_lang(chat_id)
-        _ = get_string(language)
+        _ = strings(language)
         keyboard = help_pannel(_, True)
         await update.edit_message_text(
             _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
@@ -52,7 +52,7 @@ async def helper_private(
         except:
             pass
         language = await get_lang(update.chat.id)
-        _ = get_string(language)
+        _ = strings(language)
         keyboard = help_pannel(_)
         await update.reply_photo(
             random.choice(AVISHA),
