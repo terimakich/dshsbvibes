@@ -1,8 +1,8 @@
-from strings import get_string
+from strings import strings
 
 from ERAVIBES import app
 from ERAVIBES.misc import SUDOERS
-from ERAVIBES.utils.database import strings, is_maintenance
+from ERAVIBES.utils.database import get_lang, is_maintenance
 
 
 def language(mystic):
@@ -19,10 +19,10 @@ def language(mystic):
             pass
 
         try:
-            language = await strings(message.chat.id)
-            language = get_string(language)
+            language = await get_lang(message.chat.id)
+            language = strings(language)
         except:
-            language = get_string("en")
+            language = strings("en")
         return await mystic(_, message, language)
 
     return wrapper
@@ -37,10 +37,10 @@ def languageCB(mystic):
                     show_alert=True,
                 )
         try:
-            language = await strings(CallbackQuery.message.chat.id)
-            language = get_string(language)
+            language = await get_lang(CallbackQuery.message.chat.id)
+            language = strings(language)
         except:
-            language = get_string("en")
+            language = strings("en")
         return await mystic(_, CallbackQuery, language)
 
     return wrapper
@@ -49,10 +49,10 @@ def languageCB(mystic):
 def LanguageStart(mystic):
     async def wrapper(_, message, **kwargs):
         try:
-            language = await strings(message.chat.id)
-            language = get_string(language)
+            language = await get_lang(message.chat.id)
+            language = strings(language)
         except:
-            language = get_string("en")
+            language = strings("en")
         return await mystic(_, message, language)
 
     return wrapper
