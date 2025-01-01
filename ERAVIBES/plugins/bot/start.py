@@ -18,6 +18,7 @@ from ERAVIBES.utils.database import (
     get_lang,
     is_banned_user,
     is_on_off,
+    is_served_private_chat,
 )
 from ERAVIBES.utils.decorators.language import LanguageStart
 from ERAVIBES.utils.formatters import get_readable_time
