@@ -9,16 +9,16 @@ from ERAVIBES.utils.database import (
     maintenance_off,
     maintenance_on,
 )
-from strings import get_string
+from strings import strings
 
 
 @app.on_message(filters.command(["maintenance", "mt"]) & SUDOERS)
 async def maintenance(client, message: Message):
     try:
         language = await get_lang(message.chat.id)
-        _ = get_string(language)
+        _ = strings(language)
     except:
-        _ = get_string("en")
+        _ = strings("en")
     usage = _["maint_1"]
     if len(message.command) != 2:
         return await message.reply_text(usage)
