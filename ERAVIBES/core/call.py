@@ -37,7 +37,7 @@ from ERAVIBES.utils.formatters import check_duration, seconds_to_min, speed_conv
 from ERAVIBES.utils.inline.play import stream_markup
 from ERAVIBES.utils.stream.autoclear import auto_clean
 from ERAVIBES.utils.thumbnails import get_thumb
-from strings import get_string
+from strings import strings
 
 autoend = {}
 counter = {}
@@ -291,7 +291,7 @@ class Call(PyTgCalls):
     ):
         assistant = await group_assistant(self, chat_id)
         language = await get_lang(chat_id)
-        _ = get_string(language)
+        _ = strings(language)
         if video:
             stream = AudioVideoPiped(
                 link,
@@ -353,7 +353,7 @@ class Call(PyTgCalls):
         else:
             queued = check[0]["file"]
             language = await get_lang(chat_id)
-            _ = get_string(language)
+            _ = strings(language)
             title = (check[0]["title"]).title()
             user = check[0]["by"]
             original_chat_id = check[0]["chat_id"]
