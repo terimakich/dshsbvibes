@@ -20,24 +20,9 @@ from ERAVIBES.utils.database import (
 from ERAVIBES.utils.decorators.language import LanguageStart
 from ERAVIBES.utils.formatters import get_readable_time
 from ERAVIBES.utils.inline import help_pannel, private_panel, start_panel
-from config import BANNED_USERS
-from strings import get_string
+from config import BANNED_USERS, D
+from strings import get_string, image
 
-IMAGE = [
-"https://files.catbox.moe/ciqfdq.jpg",
-"https://files.catbox.moe/jrfn5c.jpg",
-"https://files.catbox.moe/tb20q7.jpg",
-"https://files.catbox.moe/htuibk.jpg",
-"https://files.catbox.moe/rpghqf.jpg",
-"https://files.catbox.moe/70p4kt.jpg",
-"https://files.catbox.moe/cbr208.jpg",
-"https://files.catbox.moe/3fhcv2.jpg",
-"https://files.catbox.moe/3m0pth.jpg",
-"https://files.catbox.moe/pbekqf.jpg",
-]
-
-# Updated list with emojis
-D = ["😘", "👾", "🤝", "👀", "❤️‍🔥", "💘", "😍", "😇", "🕊️", "🐳", "🎉", "🏆", "🗿", "⚡", "💯", "👌", "🍾"]
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
@@ -50,7 +35,7 @@ async def start_pm(client, message: Message, _):
         if name[0:4] == "help":
             keyboard = help_pannel(_)
             return await message.reply_photo(
-                random.choice(IMAGE),
+                random.choice(image),
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
             )
@@ -102,7 +87,7 @@ async def start_pm(client, message: Message, _):
     else:
         out = private_panel(_)
         await message.reply_photo(
-            random.choice(IMAGE),
+            random.choice(image),
             caption=_["start_2"].format(message.from_user.mention, app.mention),
             reply_markup=InlineKeyboardMarkup(out),
         )
