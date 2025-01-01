@@ -3,6 +3,7 @@ from os import getenv
 
 from dotenv import load_dotenv
 from pyrogram import filters
+from distutils.util import strtobool
 
 load_dotenv()
 
@@ -81,7 +82,7 @@ TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", 1073741824))
 #❖ Checkout https://www.gbmb.org/mb-to-bytes for converting mb to bytes
 
 # Set it true if you want your bot to be private only [You'll need to allow CHAT_ID via /authorize command then only your bot will play music in that chat.]
-PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", "False")
+PRIVATE_BOT_MODE = strtobool(getenv("PRIVATE_BOT_MODE", "False"))
 
 # If you want your bot to setup the commands automatically in the bot's menu set it to true.
 # Refer to https://i.postimg.cc/Bbg3LQTG/image.png
