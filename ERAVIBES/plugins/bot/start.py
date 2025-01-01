@@ -1,3 +1,5 @@
+import logging
+import traceback
 import time
 import random 
 from pyrogram import filters
@@ -125,12 +127,15 @@ async def testbot(client, message: Message, _):
         print(f"Reply Error: {e}")
 
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 @app.on_message(filters.new_chat_members, group=3)
 async def welcome(client, message: Message):
     chat_id = message.chat.id
 
     # Private bot mode check
-    if config.PRIVATE_BOT_MODE == str(True):
+    if config.PRIVATE_BOT_MODE:
         if not await is_served_private_chat(chat_id):
             await message.reply_text(
                 "**ᴛʜɪs ʙᴏᴛ's ᴘʀɪᴠᴀᴛᴇ ᴍᴏᴅᴇ ʜᴀs ʙᴇᴇɴ ᴇɴᴀʙʟᴇᴅ. ᴏɴʟʏ ᴍʏ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs. ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ɪᴛ ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ, ᴀsᴋ ᴍʏ ᴏᴡɴᴇʀ ᴛᴏ ᴀᴜᴛʜᴏʀɪᴢᴇ ʏᴏᴜʀ ᴄʜᴀᴛ.**"
@@ -165,27 +170,30 @@ async def welcome(client, message: Message):
 
             # Handle owner joining
             if member.id in config.OWNER_ID:
-                return await message.reply_text(
+                await message.reply_text(
                     _["start_7"].format(client.mention, member.mention)
                 )
+                continue
 
             # Handle SUDOERS joining
             if member.id in SUDOERS:
-                return await message.reply_text(
+                await message.reply_text(
                     _["start_8"].format(client.mention, member.mention)
                 )
-            return
+                continue
 
         except Exception as e:
-            print(f"Error: {e}")
-            return
-'''
+            logger.error(f"Error: {e}\nTraceback: {traceback.format_exc()}")
+            continue
+
 @app.on_callback_query(filters.regex("go_to_start"))
 @LanguageStart
 async def go_to_home(client, callback_query: CallbackQuery, _):
-    out = music_start_pannel(_)
-    await callback_query.message.edit_text(
-        text=_["start_9"].format(callback_query.message.from_user.mention, app.mention),
-        reply_markup=InlineKeyboardMarkup(out),
-    )
-'''
+    try:
+        out = music_start_pannel(_)
+        await callback_query.message.edit_text(
+            text=_["start_9"].format(callback_query.message.from_user.mention, app.mention),
+            reply_markup=InlineKeyboardMarkup(out),
+        )
+    except Exception as e:
+        logger.error(f"Error editing message: {e}")
