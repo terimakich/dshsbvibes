@@ -87,6 +87,9 @@ PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", "False")
 # Refer to https://i.postimg.cc/Bbg3LQTG/image.png
 SET_CMDS = getenv("SET_CMDS", "False")
 
+# Updated list with React emojis
+D = ["😘", "👾", "🤝", "👀", "❤️‍🔥", "💘", "😍", "😇", "🕊️", "🐳", "🎉", "🏆", "🗿", "⚡", "💯", "👌", "🍾"]
+
 
 #❖ Get your pyrogram v2 session from @StringFatherBot on Telegram
 STRING1 = getenv("STRING_SESSION", None)
