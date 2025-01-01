@@ -8,7 +8,7 @@ from ERAVIBES import app
 from ERAVIBES.core.call import ERA
 from ERAVIBES.utils import bot_sys_stats
 from ERAVIBES.utils.decorators.language import language
-from ERAVIBES.utils.inline import support_group_markup
+#from ERAVIBES.utils.inline import support_group_markup
 
 
 @app.on_message(filters.command(["ping", "alive"]) & ~BANNED_USERS)
