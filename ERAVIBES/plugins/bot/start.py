@@ -136,11 +136,19 @@ logger = logging.getLogger(__name__)
 async def welcome(client, message: Message):
     chat_id = message.chat.id
 
+    # Ensure config.OWNER_ID is a list
+    if isinstance(config.OWNER_ID, int):
+        config.OWNER_ID = [config.OWNER_ID]
+
+    # Ensure SUDOERS is a list
+    if isinstance(SUDOERS, int):
+        SUDOERS = [SUDOERS]
+
     # Private bot mode check
     if config.PRIVATE_BOT_MODE:
         if not await is_served_private_chat(chat_id):
             await message.reply_text(
-                "<b>ᴛʜɪs ʙᴏᴛ's ᴘʀɪᴠᴀᴛᴇ ᴍᴏᴅᴇ ʜᴀs ʙᴇᴇɴ ᴇɴᴀʙʟᴇᴅ. ᴏɴʟʏ ᴍʏ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs. ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ɪᴛ ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ, ᴀsᴋ ᴍʏ ᴏᴡɴᴇʀ ᴛᴏ ᴀᴜᴛʜᴏʀɪᴢᴇ ʏᴏᴜʀ ᴄʜᴀᴛ.</b>"
+                "**ᴛʜɪs ʙᴏᴛ's ᴘʀɪᴠᴀᴛᴇ ᴍᴏᴅᴇ ʜᴀs ʙᴇᴇɴ ᴇɴᴀʙʟᴇᴅ. ᴏɴʟʏ ᴍʏ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs. ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ɪᴛ ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ, ᴀsᴋ ᴍʏ ᴏᴡɴᴇʀ ᴛᴏ ᴀᴜᴛʜᴏʀɪᴢᴇ ʏᴏᴜʀ ᴄʜᴀᴛ.**"
             )
             return await client.leave_chat(chat_id)
     else:
@@ -170,29 +178,24 @@ async def welcome(client, message: Message):
                     reply_markup=InlineKeyboardMarkup(out),
                 )
 
-    # Handle owner joining
-    if isinstance(config.OWNER_ID, int):
-        config.OWNER_ID = [config.OWNER_ID]
+            # Handle owner joining
             if member.id in config.OWNER_ID:
                 await message.reply_text(
                     _["start_7"].format(client.mention, member.mention)
                 )
                 continue
-                
 
-    # Handle SUDOERS joining
-    if isinstance(SUDOERS, int):
-        SUDOERS = [SUDOERS]
+            # Handle SUDOERS joining
             if member.id in SUDOERS:
                 await message.reply_text(
                     _["start_8"].format(client.mention, member.mention)
                 )
                 continue
-                
 
         except Exception as e:
             logger.error(f"Error: {e}\nTraceback: {traceback.format_exc()}")
             continue
+
 
 @app.on_callback_query(filters.regex("go_to_start"))
 @LanguageStart
