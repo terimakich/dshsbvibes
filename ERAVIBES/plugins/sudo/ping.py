@@ -29,6 +29,6 @@ async def ping(client, message: Message, lang):
     UP, CPU, RAM, DISK = await bot_sys_stats()
     resp = (datetime.now() - start).microseconds / 1000
     await response.edit_text(
-        text=get_string(lang_code)["ping_2"].format(resp, app.mention, UP, RAM, CPU, DISK, pytgping),
-        reply_markup=supp_markup(),
-    )
+    text=get_string(lang_code)["ping_2"].format(resp, app.mention, UP, RAM, CPU, DISK, pytgping),
+    reply_markup=supp_markup(_),
+)
