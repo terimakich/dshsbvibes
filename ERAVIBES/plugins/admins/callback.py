@@ -32,7 +32,7 @@ from config import (
     confirmer,
     votemode,
 )
-from strings import strings
+from strings import get_string
 
 checker = {}
 upvoters = {}
@@ -374,9 +374,9 @@ async def markup_timer():
                     pass
                 try:
                     language = await get_lang(chat_id)
-                    _ = strings(language)
+                    _ = get_string(language)
                 except:
-                    _ = strings("en")
+                    _ = get_string("en")
                 try:
                     buttons = stream_markup_timer(
                         _,
