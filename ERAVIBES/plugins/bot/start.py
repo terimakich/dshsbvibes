@@ -140,10 +140,6 @@ async def welcome(client, message: Message):
     if isinstance(config.OWNER_ID, int):
         config.OWNER_ID = [config.OWNER_ID]
 
-    # Ensure SUDOERS is a list
-    if isinstance(SUDOERS, int):
-        SUDOERS = [SUDOERS]
-
     # Private bot mode check
     if config.PRIVATE_BOT_MODE:
         if not await is_served_private_chat(chat_id):
