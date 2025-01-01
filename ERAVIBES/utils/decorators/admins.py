@@ -14,7 +14,7 @@ from ERAVIBES.utils.database import (
     is_skipmode,
 )
 from config import SUPPORT_CHAT, adminlist, confirmer
-from strings import strings
+from strings import get_string
 
 from ..formatters import int_to_alpha
 
@@ -35,9 +35,9 @@ def AdminRightsCheck(mystic):
 
         try:
             language = await get_lang(message.chat.id)
-            _ = strings(language)
+            _ = get_string(language)
         except:
-            _ = strings("en")
+            _ = get_string("en")
         if message.sender_chat:
             upl = InlineKeyboardMarkup(
                 [
@@ -131,9 +131,9 @@ def AdminActual(mystic):
 
         try:
             language = await get_lang(message.chat.id)
-            _ = strings(language)
+            _ = get_string(language)
         except:
-            _ = strings("en")
+            _ = get_string("en")
         if message.sender_chat:
             upl = InlineKeyboardMarkup(
                 [
@@ -170,9 +170,9 @@ def ActualAdminCB(mystic):
                 )
         try:
             language = await get_lang(CallbackQuery.message.chat.id)
-            _ = strings(language)
+            _ = get_string(language)
         except:
-            _ = strings("en")
+            _ = get_string("en")
         if CallbackQuery.message.chat.type == ChatType.PRIVATE:
             return await mystic(client, CallbackQuery, _)
         is_non_admin = await is_nonadmin_chat(CallbackQuery.message.chat.id)
