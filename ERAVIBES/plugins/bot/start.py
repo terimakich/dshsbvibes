@@ -179,8 +179,7 @@ async def welcome(client, message: Message):
         except Exception as e:
             print(f"Error: {e}")
             return
-
-
+'''
 @app.on_callback_query(filters.regex("go_to_start"))
 @LanguageStart
 async def go_to_home(client, callback_query: CallbackQuery, _):
@@ -189,3 +188,4 @@ async def go_to_home(client, callback_query: CallbackQuery, _):
         text=_["start_9"].format(callback_query.message.from_user.mention, app.mention),
         reply_markup=InlineKeyboardMarkup(out),
     )
+'''
