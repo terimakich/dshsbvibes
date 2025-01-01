@@ -19,7 +19,7 @@ from ERAVIBES.utils.database import (
 )
 from ERAVIBES.utils.decorators.language import LanguageStart
 from ERAVIBES.utils.formatters import get_readable_time
-from ERAVIBES.utils.inline import help_pannel, private_panel, start_panel
+from ERAVIBES.utils.inline import help_pannel, private_panel, start_pannel
 from config import BANNED_USERS, D
 from strings import get_string, image
 
@@ -184,7 +184,7 @@ async def welcome(client, message: Message):
 @app.on_callback_query(filters.regex("go_to_start"))
 @LanguageStart
 async def go_to_home(client, callback_query: CallbackQuery, _):
-    out = music_start_panel(_)
+    out = music_start_pannel(_)
     await callback_query.message.edit_text(
         text=_["start_9"].format(callback_query.message.from_user.mention, app.mention),
         reply_markup=InlineKeyboardMarkup(out),
