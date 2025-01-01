@@ -52,4 +52,4 @@ for filename in os.listdir(r"./strings/langs/"):
 
 # Importing helpers and image
 from .helpers import *
-#from .image import Photos
+from .image import image
