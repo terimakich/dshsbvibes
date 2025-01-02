@@ -52,11 +52,11 @@ async def style_buttons(c, m, cb=False):
     ]
     if not cb:
         await m.reply_text(
-            f"`{text}`", reply_markup=InlineKeyboardMarkup(buttons), quote=True
+            f"<code>{text}</code>", reply_markup=InlineKeyboardMarkup(buttons), quote=True
         )
     else:
         await m.answer()
-        await m.message.edit_text(f"`{text}`", reply_markup=InlineKeyboardMarkup(buttons))
+        await m.message.edit_text(f"<code>{text}</code>", reply_markup=InlineKeyboardMarkup(buttons))
 
 
 @app.on_callback_query(filters.regex("^nxt"))
@@ -96,7 +96,7 @@ async def nxt(c, m):
            [InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data="close_reply"), InlineKeyboardButton("ʙᴀᴄᴋ", callback_data="nxt+0")],
         ]
         await m.answer()
-        await m.message.edit_text(m.message.text, reply_markup=InlineKeyboardMarkup(buttons))
+        await m.message.edit_text(f"<code>{m.message.text}</code>", reply_markup=InlineKeyboardMarkup(buttons))
     else:
         await style_buttons(c, m, cb=True)
 
@@ -188,6 +188,6 @@ async def style(c, m):
     text = m.message.reply_to_message.text.split(" ", 1)[1]
     new_text = cls(text)
     try:
-        await m.message.edit_text(new_text, reply_markup=m.message.reply_markup)
+        await m.message.edit_text(f"<code>{new_text}</code>", reply_markup=m.message.reply_markup)
     except:
         pass
