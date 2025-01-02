@@ -15,6 +15,7 @@ def generate_image(client, message):
         
         if response.status_code == 200:
             data = response.json()
+            print(data)  # Debugging: Print the API response
             
             # Check if the API returns a direct URL
             if "url" in data:
@@ -26,6 +27,10 @@ def generate_image(client, message):
                 image_data = data["image"]
                 image_bytes = base64.b64decode(image_data)
                 message.reply_photo(BytesIO(image_bytes))
+            
+            # Check if the API returns binary image data
+            elif isinstance(data, bytes):
+                message.reply_photo(BytesIO(data))
             
             # Handle unknown response format
             else:
