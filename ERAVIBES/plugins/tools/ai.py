@@ -15,20 +15,15 @@ def generate_image(client, message):
         
         if response.status_code == 200:
             data = response.json()
-            print("API Response:", data)  # Print the JSON response directly
+            print("API Response:", data)  # Print the JSON response for debugging
             
-            # Handle the response based on its structure
+            # Extract the image URL from the JSON response
             if "url" in data:
                 image_url = data["url"]
-                message.reply_photo(image_url)
-            elif "image" in data:
-                import base64
-                from io import BytesIO
-                image_data = data["image"]
-                image_bytes = base64.b64decode(image_data)
-                message.reply_photo(BytesIO(image_bytes))
+                # Send the image URL to the user
+                message.reply_text(f"Here is your generated image: {image_url}")
             else:
-                message.reply_text("Unable to extract image from the API response.")
+                message.reply_text("No image URL found in the API response.")
         else:
             message.reply_text("Failed to generate image. Please try again later.")
     else:
