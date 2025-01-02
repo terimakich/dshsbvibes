@@ -11,13 +11,15 @@ from pyrogram import filters
 
 import config
 from ERAVIBES import app
+from ERAVIBES.core.call import ERA
 from ERAVIBES.misc import HAPP, SUDOERS, XCB
 from ERAVIBES.utils.database import (
     get_active_chats,
+    get_cmode,
     remove_active_chat,
     remove_active_video_chat,
 )
-from ERAVIBES.utils.decorators.language import language
+from ERAVIBES.utils.decorators import AdminActual, language
 from ERAVIBES.utils.pastebin import Bin
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -108,6 +110,31 @@ async def update_(client, message, _):
         os.system("pip3 install -r requirements.txt")
         os.system(f"kill -9 {os.getpid()} && bash start")
         exit()
+
+@app.on_message(command("reboot") & filters.group & ~BANNED_USERS)
+@AdminActual
+async def reboot(client, message: Message, _):
+    mystic = await message.reply_text(
+        f"<b><blockquote>❍ 𝐏ʟᴇᴀ𝐬ᴇ 𝐖ᴀɪᴛ...</b></blockquote>\n<b><blockquote>❍ 𝐑ᴇʙᴏᴏᴛɪɴɢ{app.mention} 𝐅ᴏʀ 𝐘ᴏᴜʀ 𝐂ʜᴀᴛ.</b></blockquote>" 
+    )
+    await asyncio.sleep(1)
+    try:
+        db[message.chat.id] = []
+        await ERA.stop_stream(message.chat.id)
+    except Exception:
+        pass
+    chat_id = await get_cmode(message.chat.id)
+    if chat_id:
+        try:
+            await app.get_chat(chat_id)
+        except Exception:
+            pass
+        try:
+            db[chat_id] = []
+            await ERA.stop_stream(chat_id)
+        except Exception:
+            pass
+    return await mystic.edit_text("<b><blockquote>❍ 𝐒ᴜᴄᴇ𝐬𝐬ғᴜʟʟʏ 𝐑ᴇ𝐬ᴛᴀʀᴛᴇᴅ</b></blockquote>\n<b><blockquote>❍ 𝐓ʀʏ 𝐏ʟᴀʏɪɴɢ 𝐍ᴏᴡ...</b></blockquote>")
 
 
 @app.on_message(filters.command(["restart"]) & SUDOERS)
