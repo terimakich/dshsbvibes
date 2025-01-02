@@ -10,6 +10,7 @@ from git.exc import GitCommandError, InvalidGitRepositoryError
 from pyrogram import filters
 
 import config
+from config import BANNED_USERS
 from ERAVIBES import app
 from ERAVIBES.core.call import ERA
 from ERAVIBES.misc import HAPP, SUDOERS, XCB
