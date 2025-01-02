@@ -6,7 +6,12 @@ from ERAVIBES import app
 
 @app.on_message(filters.command(["font", "fonts", "f"], prefixes=["/", "!", ".", ""]))
 async def style_buttons(c, m, cb=False):
-    text = m.text.split(' ', 1)[1]
+    if cb:
+        # Access text from the CallbackQuery's message
+        text = m.message.reply_to_message.text.split(' ', 1)[1]
+    else:
+        # Access text from the Message object
+        text = m.text.split(' ', 1)[1]
     buttons = [
         [
             InlineKeyboardButton("𝚃𝚢𝚙𝚎𝚠𝚛𝚒𝚝𝚎𝚛", callback_data="style+typewriter"),
@@ -88,7 +93,7 @@ async def nxt(c, m):
                 InlineKeyboardButton("S̶t̶r̶i̶k̶e̶", callback_data="style+strike"),
                 InlineKeyboardButton("F༙r༙o༙z༙e༙n༙", callback_data="style+frozen"),
             ],
-            [InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data="close_reply"), InlineKeyboardButton("ʙᴀᴄᴋ", callback_data="nxt+0")],
+           [InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data="close_reply"), InlineKeyboardButton("ʙᴀᴄᴋ", callback_data="nxt+0")],
         ]
         await m.answer()
         await m.message.edit_text(m.message.text, reply_markup=InlineKeyboardMarkup(buttons))
