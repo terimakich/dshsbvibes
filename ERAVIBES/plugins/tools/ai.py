@@ -4,6 +4,32 @@ import requests
 #from io import BytesIO
 from ERAVIBES import app
 
+
+# Define the base URL
+base_url = "https://chatwithai.codesearch.workers.dev/?chat="
+
+# Function to handle the /ai command
+@app.on_message(filters.command("ai"))
+def ai_command(client, message):
+    # Extract the query from the message
+    query = " ".join(message.command[1:])
+    
+    if not query:
+        message.reply_text("Please provide a query after the /ai command.")
+        return
+    
+    # Send the GET request
+    response = requests.get(base_url + query)
+    
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Send the response back to the user
+        message.reply_text(response.text)
+    else:
+        message.reply_text("Failed to get a response from the AI.")
+
+
+
 @app.on_message(filters.command("gen"))
 def generate_image(client, message):
     # Extract the query from the message
