@@ -111,7 +111,7 @@ async def update_(client, message, _):
         os.system(f"kill -9 {os.getpid()} && bash start")
         exit()
 
-@app.on_message(command("reboot") & filters.group & ~BANNED_USERS)
+@app.on_message(filters.command("reboot") & filters.group & ~BANNED_USERS)
 @AdminActual
 async def reboot(client, message: Message, _):
     mystic = await message.reply_text(
