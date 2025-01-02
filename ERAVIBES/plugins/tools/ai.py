@@ -1,5 +1,7 @@
 from pyrogram import Client, filters
 import requests
+import base64
+from io import BytesIO
 from ERAVIBES import app
 
 # Command handler for /gen
@@ -13,9 +15,21 @@ def generate_image(client, message):
         
         if response.status_code == 200:
             data = response.json()
-            # Assuming the API returns a direct URL to the image
-            image_url = data.get("url", "No URL found in response")
-            message.reply_text(f"Here is your generated image: {image_url}")
+            
+            # Check if the API returns a direct URL
+            if "url" in data:
+                image_url = data["url"]
+                message.reply_photo(image_url)
+            
+            # Check if the API returns base64 image data
+            elif "image" in data:
+                image_data = data["image"]
+                image_bytes = base64.b64decode(image_data)
+                message.reply_photo(BytesIO(image_bytes))
+            
+            # Handle unknown response format
+            else:
+                message.reply_text("Unable to extract image from the API response.")
         else:
             message.reply_text("Failed to generate image. Please try again later.")
     else:
