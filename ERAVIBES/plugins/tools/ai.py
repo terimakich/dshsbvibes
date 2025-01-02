@@ -4,7 +4,6 @@ import requests
 #from io import BytesIO
 from ERAVIBES import app
 
-# Command handler for /gen
 @app.on_message(filters.command("gen"))
 def generate_image(client, message):
     # Extract the query from the message
@@ -17,10 +16,9 @@ def generate_image(client, message):
             data = response.json()
             print("API Response:", data)  # Print the JSON response for debugging
             
-            # Extract the image URL from the JSON response
+            # Extract the image URL or handle the response
             if "url" in data:
                 image_url = data["url"]
-                # Send the image URL to the user
                 message.reply_text(f"Here is your generated image: {image_url}")
             else:
                 message.reply_text("No image URL found in the API response.")
