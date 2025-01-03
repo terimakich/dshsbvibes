@@ -49,7 +49,7 @@ async def download_video(client, CallbackQuery):
     videoid = callback_data.split(None, 1)[1]
     user_id = CallbackQuery.from_user.id
     user_name = CallbackQuery.from_user.first_name
-    chutiya = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+    chutiya = f'<a href="tg://user?id={user_id}">{user_name}</a>'
     await CallbackQuery.answer("ᴏᴋ sɪʀ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...", show_alert=True)
     pablo = await client.send_message(
         CallbackQuery.message.chat.id,
@@ -121,8 +121,15 @@ async def download_video(client, CallbackQuery):
         )
         await client.send_message(
             CallbackQuery.message.chat.id,
-            f"<b>ʜᴇʏ</b> {chutiya}\n\n<b>✅ sᴜᴄᴄᴇssғᴜʟʟʏ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ.</b>\n<b>➻ ᴠɪᴅᴇᴏ sᴇɴᴛ ɪɴ ʏᴏᴜʀ ᴘᴍ/ᴅᴍ.</b>\n<b>➥ ᴄʜᴇᴄᴋ ʜᴇʀᴇ » [ʙᴏᴛ ᴘᴍ/ᴅᴍ](tg://openmessage?user_id={app.id})</b>🤗",
+            text=(
+                f"<b>ʜᴇʏ</b> {chutiya}\n\n"
+                f"<b>✅ sᴜᴄᴄᴇssғᴜʟʟʏ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ.</b>\n"
+                f"<b>➻ ᴠɪᴅᴇᴏ sᴇɴᴛ ɪɴ ʏᴏᴜʀ ᴘᴍ/ᴅᴍ.</b>\n"
+                f"<b>➥ ᴄʜᴇᴄᴋ ʜᴇʀᴇ » <a href='tg://openmessage?user_id={app.id}'>ʙᴏᴛ ᴘᴍ/ᴅᴍ</a></b>🤗"
+            ),
+            parse_mode="html"
         )
+        
         await pablo.delete()
         for files in (sedlyf, file_stark):
             if files and os.path.exists(files):
@@ -246,9 +253,15 @@ async def download_audio(client, CallbackQuery):
         )
         await client.send_message(
             CallbackQuery.message.chat.id,
-            f"ʜᴇʏ {chutiya}<b>\n\n✅ sᴜᴄᴄᴇssғᴜʟʟʏ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ.</b>\n<b>➻ ᴀᴜᴅɪᴏ sᴇɴᴛ ɪɴ ʏᴏᴜʀ ᴘᴍ/ᴅᴍ.</b>\n<b>➥ ᴄʜᴇᴄᴋ ʜᴇʀᴇ » <a href={tg://openmessage?user_id={app.id}}>ʙᴏᴛ ᴘᴍ/ᴅᴍ</a></b>🤗", #<a href={0}>𝗺𝘆 𝗼𝘄𝗻𝗲𝗿</a> [ʙᴏᴛ ᴘᴍ/ᴅᴍ](tg://openmessage?user_id={app.id})
+            text=(
+                f"<b>ʜᴇʏ</b> {chutiya}\n\n"
+                f"<b>✅ sᴜᴄᴄᴇssғᴜʟʟʏ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ.</b>\n"
+                f"<b>➻ ᴠɪᴅᴇᴏ sᴇɴᴛ ɪɴ ʏᴏᴜʀ ᴘᴍ/ᴅᴍ.</b>\n"
+                f"<b>➥ ᴄʜᴇᴄᴋ ʜᴇʀᴇ » <a href='tg://openmessage?user_id={app.id}'>ʙᴏᴛ ᴘᴍ/ᴅᴍ</a></b>🤗"
+            ),
+            parse_mode="html"
         )
-
+        
         await pablo.delete()
         for files in (sedlyf, file_stark):
             if files and os.path.exists(files):
