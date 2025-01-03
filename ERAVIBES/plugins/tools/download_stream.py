@@ -102,23 +102,31 @@ async def download_video(client, CallbackQuery):
         )
         return
 
-    file_stark = f"{ytdl_data['id']}.mp4"
-    capy = f"❄ <b>ᴛɪᴛʟᴇ :</b> <a href={thum}>{mo}</a>\n\n💫 <b>ᴄʜᴀɴɴᴇʟ :</b> {thums}\n\n🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {chutiya}" # <a href={0}>𝗺𝘆 𝗼𝘄𝗻𝗲𝗿</a>
+    file_stark = f"{ytdl_data['id']}.mp3"  # Adjusted file extension
+    capy = (
+        f"❄ <b>ᴛɪᴛʟᴇ :</b> <a href='{mo}'>{thum}</a>\n\n"
+        f"💫 <b>ᴄʜᴀɴɴᴇʟ :</b> {thums}\n\n"
+        f"🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {chutiya}\n\n"
+        f"⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {int(ytdl_data['duration']) // 60}:{int(ytdl_data['duration']) % 02d}"
+    )
+    
     try:
-        await client.send_video(
-            CallbackQuery.from_user.id,
-            video=open(file_stark, "rb"),
-            duration=int(ytdl_data["duration"]),
-            file_name=str(ytdl_data["title"]),
-            thumb=sedlyf,
-            caption=capy,
-            supports_streaming=True,
-            progress_args=(
-                pablo,
-                f"<b>{chutiya} ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...</b>\n\n<b>ᴜᴘʟᴏᴀᴅɪɴɢ ᴠɪᴅᴇᴏ ғʀᴏᴍ ʏᴏᴜᴛᴜʙᴇ...💫</b>",
-                file_stark,
-            ),
-        )
+        # Open the file in binary mode and send it
+        with open(file_stark, "rb") as audio_file:
+            await client.send_audio(
+                chat_id=CallbackQuery.from_user.id,  # Send to the user who triggered the callback
+                audio=audio_file,  # Pass the file object
+                title=str(ytdl_data["title"]),  # Set the title of the audio
+                thumb=sedlyf,  # Set the thumbnail
+                caption=capy,  # Set the formatted caption
+                parse_mode="html",  # Ensure HTML formatting is applied
+                progress=upload_progress,  # Custom progress callback (if supported)
+                progress_args=(
+                    pablo,
+                    f"<b>{chutiya} ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...</b>\n\n<b>ᴜᴘʟᴏᴀᴅɪɴɢ ᴀᴜᴅɪᴏ ғʀᴏᴍ ʏᴏᴜᴛᴜʙᴇ...💫</b>",
+                    file_stark,
+                ),
+            )
         await client.send_message(
             CallbackQuery.message.chat.id,
             text=(
@@ -236,21 +244,33 @@ async def download_audio(client, CallbackQuery):
         )
         return
 
+    
     file_stark = f"{ytdl_data['id']}.mp3"  # Adjusted file extension
-    capy = f"❄ <b>ᴛɪᴛʟᴇ :</b> [{thum}]({mo})\n\n💫 </b>ᴄʜᴀɴɴᴇʟ :</b> {thums}\n\n🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {chutiya}\n\n⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {int(ytdl_data['duration']) // 60}:{int(ytdl_data['duration']) % 60}"
+    capy = (
+        f"❄ <b>ᴛɪᴛʟᴇ :</b> <a href='{mo}'>{thum}</a>\n\n"
+        f"💫 <b>ᴄʜᴀɴɴᴇʟ :</b> {thums}\n\n"
+        f"🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {chutiya}\n\n"
+        f"⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {int(ytdl_data['duration']) // 60}:{int(ytdl_data['duration']) % 02d}"
+    )
+    
     try:
-        await client.send_audio(
-            CallbackQuery.from_user.id,
-            audio=open(file_stark, "rb"),  
-            title=str(ytdl_data["title"]),
-            thumb=sedlyf,
-            caption=capy,
-            progress_args=(
-                pablo,
-                f"<b>{chutiya} ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...</b>\n\n<b>ᴜᴘʟᴏᴀᴅɪɴɢ ᴀᴜᴅɪᴏ ғʀᴏᴍ ʏᴏᴜᴛᴜʙᴇ...💫</b>",
-                file_stark,
-            ),
-        )
+        # Open the file in binary mode and send it
+        with open(file_stark, "rb") as audio_file:
+            await client.send_audio(
+                chat_id=CallbackQuery.from_user.id,  # Send to the user who triggered the callback
+                audio=audio_file,  # Pass the file object
+                title=str(ytdl_data["title"]),  # Set the title of the audio
+                thumb=sedlyf,  # Set the thumbnail
+                caption=capy,  # Set the formatted caption
+                parse_mode="html",  # Ensure HTML formatting is applied
+                progress=upload_progress,  # Custom progress callback (if supported)
+                progress_args=(
+                    pablo,
+                    f"<b>{chutiya} ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...</b>\n\n<b>ᴜᴘʟᴏᴀᴅɪɴɢ ᴀᴜᴅɪᴏ ғʀᴏᴍ ʏᴏᴜᴛᴜʙᴇ...💫</b>",
+                    file_stark,
+                ),
+            )
+            
         await client.send_message(
             CallbackQuery.message.chat.id,
             text=(
