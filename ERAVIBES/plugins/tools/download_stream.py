@@ -287,19 +287,19 @@ async def download_audio(client, CallbackQuery):
             if files and os.path.exists(files):
                 os.remove(files)
 
-        except Exception as e:
-            await pablo.delete()
-            return await client.send_message(
-                CallbackQuery.message.chat.id,
-                f"<b>ʜᴇʏ {chutiya} ᴘʟᴇᴀsᴇ ᴜɴʙʟᴏᴄᴋ ᴍᴇ ғᴏʀ ᴅᴏᴡɴʟᴏᴀᴅ ʏᴏᴜʀ ᴀᴜᴅɪᴏ ʙʏ ᴄʟɪᴄᴋ ʜᴇʀᴇ 👇👇</b>",
-                reply_markup=InlineKeyboardMarkup(
+    except Exception as e:
+        await pablo.delete()
+        return await client.send_message(
+            CallbackQuery.message.chat.id,
+            f"<b>ʜᴇʏ {chutiya} ᴘʟᴇᴀsᴇ ᴜɴʙʟᴏᴄᴋ ᴍᴇ ғᴏʀ ᴅᴏᴡɴʟᴏᴀᴅ ʏᴏᴜʀ ᴠɪᴅᴇᴏ ʙʏ ᴄʟɪᴄᴋ ʜᴇʀᴇ 👇👇</b>",
+            reply_markup=InlineKeyboardMarkup(
+                [
                     [
-                        [
-                            InlineKeyboardButton(
-                                f"👉ᴜɴʙʟᴏᴄᴋ ᴍᴇ🤨",
-                                url=f"https://t.me/{app.username}?start=info_{videoid}",
-                            )
-                        ]
+                        InlineKeyboardButton(
+                            f"👉ᴜɴʙʟᴏᴄᴋ ᴍᴇ🤨",
+                            url=f"https://t.me/{app.username}?start=info_{videoid}",
+                        )
                     ]
-                ),
+                ]
+            ),
         )
