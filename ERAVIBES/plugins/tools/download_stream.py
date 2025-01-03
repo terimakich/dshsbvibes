@@ -288,14 +288,6 @@ async def download_audio(client, CallbackQuery):
             if files and os.path.exists(files):
                 os.remove(files)
 
-    try:
-        # Your main code here
-        await client.send_message(
-            chat_id=CallbackQuery.message.chat.id,
-            text="Your message here"
-        )
-        except Exception as e:
-            print(f"An error occurred: {e}")  # Log the error
     except BadRequest as e:
         if "USER_IS_BLOCKED" in str(e):
             await pablo.delete()
