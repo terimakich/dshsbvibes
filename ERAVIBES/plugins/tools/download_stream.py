@@ -317,4 +317,3 @@ async def download_audio(client, CallbackQuery):
         print(f"RPCError: {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-        )
