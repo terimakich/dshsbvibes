@@ -288,7 +288,7 @@ async def download_audio(client, CallbackQuery):
             if files and os.path.exists(files):
                 os.remove(files)
 
-        try:
+    try:
         # Your main code here
         await client.send_message(
             chat_id=CallbackQuery.message.chat.id,
