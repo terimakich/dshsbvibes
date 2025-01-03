@@ -4,7 +4,7 @@ import time
 from time import time
 
 import wget
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
@@ -163,6 +163,7 @@ async def download_video(client, CallbackQuery):
 
 import os
 import time
+from pyrogram.errors import BadRequest, RPCError
 
 # Dicts to keep track of user query count and last query time
 user_last_CallbackQuery_time = {}
@@ -196,11 +197,11 @@ async def download_audio(client, CallbackQuery):
     await CallbackQuery.answer("ᴏᴋ sɪʀ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...", show_alert=True)
     pablo = await client.send_message(
         CallbackQuery.message.chat.id,
-        f"<b>ʜᴇʏ {chutiya} ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ʏᴏᴜʀ ᴀᴜᴅɪᴏ, ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...*+6*",
+        f"<b>ʜᴇʏ {chutiya} ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ʏᴏᴜʀ ᴀᴜᴅɪᴏ, ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...</b>",
     )
     if not videoid:
         await pablo.edit(
-            f"<b>ʜᴇʏ {chutiya} ʏᴏᴜʀ sᴏɴɢ ɴᴏᴛ ғᴏᴜɴᴅ ᴏɴ ʏᴏᴜᴛᴜʙᴇ. ᴛʀʏ ᴀɢᴀɪɴ...*+6*"
+            f"<b>ʜᴇʏ {chutiya} ʏᴏᴜʀ sᴏɴɢ ɴᴏᴛ ғᴏᴜɴᴅ ᴏɴ ʏᴏᴜᴛᴜʙᴇ. ᴛʀʏ ᴀɢᴀɪɴ...</b>"
         )
         return
 
@@ -287,19 +288,33 @@ async def download_audio(client, CallbackQuery):
             if files and os.path.exists(files):
                 os.remove(files)
 
-    except Exception as e:
-        await pablo.delete()
-        return await client.send_message(
-            CallbackQuery.message.chat.id,
-            f"<b>ʜᴇʏ {chutiya} ᴘʟᴇᴀsᴇ ᴜɴʙʟᴏᴄᴋ ᴍᴇ ғᴏʀ ᴅᴏᴡɴʟᴏᴀᴅ ʏᴏᴜʀ ᴠɪᴅᴇᴏ ʙʏ ᴄʟɪᴄᴋ ʜᴇʀᴇ 👇👇</b>",
-            reply_markup=InlineKeyboardMarkup(
-                [
+        try:
+        # Your main code here
+        await client.send_message(
+            chat_id=CallbackQuery.message.chat.id,
+            text="Your message here"
+        )
+    except BadRequest as e:
+        if "USER_IS_BLOCKED" in str(e):
+            await pablo.delete()
+            return await client.send_message(
+                CallbackQuery.message.chat.id,
+                f"<b>ʜᴇʏ {chutiya} ᴘʟᴇᴀsᴇ ᴜɴʙʟᴏᴄᴋ ᴍᴇ ғᴏʀ ᴅᴏᴡɴʟᴏᴀᴅ ʏᴏᴜʀ ᴀᴜᴅɪᴏ ʙʏ ᴄʟɪᴄᴋ ʜᴇʀᴇ 👇👇</b>",
+                reply_markup=InlineKeyboardMarkup(
                     [
-                        InlineKeyboardButton(
-                            f"👉ᴜɴʙʟᴏᴄᴋ ᴍᴇ🤨",
-                            url=f"https://t.me/{app.username}?start=info_{videoid}",
-                        )
+                        [
+                            InlineKeyboardButton(
+                                f"👉ᴜɴʙʟᴏᴄᴋ ᴍᴇ🤨",
+                                url=f"https://t.me/{app.username}?start=info_{videoid}",
+                            )
+                        ]
                     ]
-                ]
-            ),
+                ),
+            )
+        else:
+            print(f"BadRequest Error: {e}")
+    except RPCError as e:
+        print(f"RPCError: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
         )
