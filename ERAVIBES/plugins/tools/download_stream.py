@@ -177,7 +177,7 @@ async def download_audio(client, CallbackQuery):
     videoid = callback_data.split(None, 1)[1]
     user_id = CallbackQuery.from_user.id
     user_name = CallbackQuery.from_user.first_name
-    chutiya = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+    chutiya = f'<a href="tg://user?id={user_id}">{user_name}</a>'
     await CallbackQuery.answer("ᴏᴋ sɪʀ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...", show_alert=True)
     pablo = await client.send_message(
         CallbackQuery.message.chat.id,
@@ -230,7 +230,7 @@ async def download_audio(client, CallbackQuery):
         return
 
     file_stark = f"{ytdl_data['id']}.mp3"  # Adjusted file extension
-    capy = f"❄ <b>ᴛɪᴛʟᴇ :</b> <a href={thum}>{mo}</a>\n\n💫 </b>ᴄʜᴀɴɴᴇʟ :</b> {thums}\n\n🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {chutiya}\n\n⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {int(ytdl_data['duration']) // 60}:{int(ytdl_data['duration']) % 60}"
+    capy = f"❄ <b>ᴛɪᴛʟᴇ :</b> [{thum}]({mo})\n\n💫 </b>ᴄʜᴀɴɴᴇʟ :</b> {thums}\n\n🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {chutiya}\n\n⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {int(ytdl_data['duration']) // 60}:{int(ytdl_data['duration']) % 60}"
     try:
         await client.send_audio(
             CallbackQuery.from_user.id,
