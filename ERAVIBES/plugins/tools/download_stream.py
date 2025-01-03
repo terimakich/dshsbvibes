@@ -107,7 +107,7 @@ async def download_video(client, CallbackQuery):
         f"❄ <b>ᴛɪᴛʟᴇ :</b> <a href='{mo}'>{thum}</a>\n\n"
         f"💫 <b>ᴄʜᴀɴɴᴇʟ :</b> {thums}\n\n"
         f"🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {chutiya}\n\n"
-        f"⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {int(ytdl_data['duration']) // 60}:{int(ytdl_data['duration']) % 02d}"
+        f"⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {int(ytdl_data['duration']) // 60}:{int(ytdl_data['duration']) % 60}"
     )
     
     try:
@@ -250,7 +250,7 @@ async def download_audio(client, CallbackQuery):
         f"❄ <b>ᴛɪᴛʟᴇ :</b> <a href='{mo}'>{thum}</a>\n\n"
         f"💫 <b>ᴄʜᴀɴɴᴇʟ :</b> {thums}\n\n"
         f"🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {chutiya}\n\n"
-        f"⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {int(ytdl_data['duration']) // 60}:{int(ytdl_data['duration']) % 02d}"
+        f"⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {int(ytdl_data['duration']) // 60}:{int(ytdl_data['duration']) % 60}"
     )
     
     try:
