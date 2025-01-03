@@ -31,11 +31,6 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
         bar = "-ˋˏ-ˋˏ-ˋˏ-ˋˏ-ˋˏ-ˋˏ-ˋˏ-ˋˏ-ˋˏ✄"
     buttons = [
         [
-            InlineKeyboardButton(
-                text=f"{played} {bar} {dur}", callback_data="GetTimer",
-            )
-        ],
-        [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
             InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
             InlineKeyboardButton(text="↻", callback_data=f"ADMIN Replay|{chat_id}"),
@@ -48,7 +43,7 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
             ),
             InlineKeyboardButton(
                 text="✰ sᴜᴘᴘᴏꝛᴛ ✰", url=f"t.me/+7ehnJA3aMb84OGNl"
-            ),
+            )
         ],
         [
             InlineKeyboardButton(
@@ -56,7 +51,7 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
             ),
             InlineKeyboardButton(
                 text="📥 ᴀᴜᴅɪᴏ", callback_data=f"downloadaudio {videoid}"
-            ),
+            )
         ],
         [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
     ]
@@ -83,7 +78,7 @@ def stream_markup(_, videoid, chat_id):
             ),
             InlineKeyboardButton(
                 text="✰ sᴜᴘᴘᴏꝛᴛ ✰", url=f"t.me/+7ehnJA3aMb84OGNl"
-            ),
+            )
         ],
         [
             InlineKeyboardButton(
@@ -94,7 +89,7 @@ def stream_markup(_, videoid, chat_id):
             ),
             InlineKeyboardButton(
                 text="📥 ᴀᴜᴅɪᴏ", callback_data=f"downloadaudio {videoid}"
-            ),
+            )
         ],
      '''   [    InlineKeyboardButton(
                 text=_["CLOSE_BUTTON"], callback_data="close"
