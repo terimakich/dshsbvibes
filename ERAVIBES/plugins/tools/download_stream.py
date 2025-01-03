@@ -163,7 +163,6 @@ async def download_video(client, CallbackQuery):
 
 import os
 import time
-from pyrogram.errors import BadRequest, RPCError
 
 # Dicts to keep track of user query count and last query time
 user_last_CallbackQuery_time = {}
@@ -283,33 +282,25 @@ async def download_audio(client, CallbackQuery):
             parse_mode="html"
         )
         
-    def is_user_blocked(user_id):
-        block_status = get_user_block_status(user_id)
-        if block_status is None:
-            return False
-        return block_status
-    
-    try:
-        if pablo:
-            await pablo.delete()
-        files_to_remove = [sedlyf, file_stark]
-        for file in files_to_remove:
-            if file and os.path.exists(file):
-                os.remove(file)
+        await pablo.delete()
+        for files in (sedlyf, file_stark):
+            if files and os.path.exists(files):
+                os.remove(files)
+
     except Exception as e:
-        if pablo:
-            await pablo.delete()
-        await client.send_message(
+        await pablo.delete()
+        return await client.send_message(
             CallbackQuery.message.chat.id,
-            "Hey, please unblock me to download your video",
+            f"<b>ʜᴇʏ {chutiya} ᴘʟᴇᴀsᴇ ᴜɴʙʟᴏᴄᴋ ᴍᴇ ғᴏʀ ᴅᴏᴡɴʟᴏᴀᴅ ʏᴏᴜʀ ᴠɪᴅᴇᴏ ʙʏ ᴄʟɪᴄᴋ ʜᴇʀᴇ 👇👇</b>",
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
                         InlineKeyboardButton(
-                            "Unblock me",
+                            f"👉ᴜɴʙʟᴏᴄᴋ ᴍᴇ🤨",
                             url=f"https://t.me/{app.username}?start=info_{videoid}",
                         )
                     ]
                 ]
             ),
         )
+
