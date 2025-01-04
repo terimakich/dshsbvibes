@@ -1,10 +1,13 @@
 import asyncio
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
 from ERAVIBES import app
 from ERAVIBES.core.call import ERA
-from ERAVIBES.utils.database import set_loop
+from ERAVIBES.utils.database import (
+    set_loop,
+    get_assistant,
+)
 from ERAVIBES.utils.decorators import AdminRightsCheck
 from ERAVIBES.utils.inline import close_markup
 from config import BANNED_USERS
@@ -46,3 +49,25 @@ async def brah2(_, msg):
         await set_loop(chat_id, 0)
     except Exception as e:
         return await msg.reply(f"<b>Error {e}</b>")
+
+
+# vc invite
+@app.on_message(filters.video_chat_members_invited)
+async def brah3(app: app, message: Message):
+    text = f"➻ {message.from_user.mention}\n\n**๏ ɪɴᴠɪᴛɪɴɢ ɪɴ ᴠᴄ ᴛᴏ :**\n\n**➻ **"
+    x = 0
+    for user in message.video_chat_members_invited.users:
+        try:
+            text += f"[{user.first_name}](tg://user?id={user.id}) "
+            x += 1
+        except Exception:
+            pass
+
+    try:
+        add_link = f"https://t.me/{app.username}?startgroup=true"
+        reply_text = f"{text} 🤭🤭"
+        userbot = await get_assistant(message.chat.id)
+        await message.reply(reply_text, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="๏ ᴊᴏɪɴ ᴠᴄ ๏", url=add_link)]]))
+        
+    except Exception as e:
+        print(f"Error: {e}")
