@@ -49,6 +49,28 @@ async def _clear_(chat_id):
     await remove_active_chat(chat_id)
 
 
+async def _clear_(chat_id):
+    # Clearing the chat ID data in the database
+    db[chat_id] = []
+
+    # Removing active video chat and chat records
+    try:
+        await remove_active_video_chat(chat_id)
+        await remove_active_chat(chat_id)
+    except Exception as e:
+        print(f"Error removing active chats: {e}")
+
+    # Sending the final message
+    try:
+        AMBOT = await app.send_message(
+                chat_id,
+                f"**❎ 𝐐ᴜᴇᴜᴇ 𝐈s 𝐄ᴍᴘᴛʏ 𝐒ᴏ 𝐋ᴇғᴛ\n𝐅ʀᴏᴍ 𝐕ᴄ❗...",
+        )
+        
+    except Exception as e:
+        print(f"Error sending message: {e}")
+
+
 class Call(PyTgCalls):
     def __init__(self):
         self.userbot1 = Client(
