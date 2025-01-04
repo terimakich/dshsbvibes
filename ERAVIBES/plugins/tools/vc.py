@@ -5,10 +5,14 @@ from pyrogram.enums import ChatMemberStatus
 from pyrogram.types import Message, ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
 
+from ERAVIBES import app
 from ERAVIBES.core.call import ERA
 from ERAVIBES.core.userbot import Userbot
-from ERAVIBES.utils.database import get_assistant
-from ERAVIBES import app
+from ERAVIBES.utils.database import (
+    get_assistant,
+    set_loop,
+)
+
 
 
 photo = [
