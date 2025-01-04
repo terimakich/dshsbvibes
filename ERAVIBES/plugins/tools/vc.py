@@ -1,7 +1,8 @@
 import random
 import asyncio
 from pyrogram import filters
-from pyrogram.types import Message, ChatMemberUpdated, ChatMemberStatus, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.enums import ChatMemberStatus
+from pyrogram.types import Message, ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
 
 from ERAVIBES.core.call import ERA
