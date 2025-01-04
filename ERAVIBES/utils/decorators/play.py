@@ -154,8 +154,10 @@ def PlayWrapper(command):
                         return await message.reply_text(
                             _["call_3"].format(app.mention, type(e).__name__)
                         )
-                    await asyncio.sleep(3)
+                    await asyncio.sleep(1)
                     await myu.edit(_["call_5"].format(app.mention))
+                    await asyncio.sleep(5)  # Wait for an additional 5 seconds before deleting the message
+                    await myu.delete()
                 except UserAlreadyParticipant:
                     pass
                 except Exception as e:
