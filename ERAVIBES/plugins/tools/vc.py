@@ -6,6 +6,7 @@ from pyrogram.types import Message, ChatMemberUpdated, InlineKeyboardMarkup, Inl
 from pyrogram.errors import UserNotParticipant
 
 from ERAVIBES.core.call import ERA
+from ERAVIBES.core.userbot import Userbot
 from ERAVIBES.utils.database import get_assistant
 from ERAVIBES import app
 
