@@ -144,6 +144,8 @@ def PlayWrapper(command):
                         "https://t.me/+", "https://t.me/joinchat/"
                     )
                 myu = await message.reply_text(_["call_4"].format(app.mention))
+                    await asyncio.sleep(3)  # Wait for an additional 5 seconds before deleting the message
+                    await myu.delete()
                 try:
                     await asyncio.sleep(1)
                     await userbot.join_chat(invitelink)
@@ -154,7 +156,7 @@ def PlayWrapper(command):
                         return await message.reply_text(
                             _["call_3"].format(app.mention, type(e).__name__)
                         )
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(4)
                     await myu.edit(_["call_5"].format(app.mention))
                     await asyncio.sleep(5)  # Wait for an additional 5 seconds before deleting the message
                     await myu.delete()
