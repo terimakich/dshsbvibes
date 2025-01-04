@@ -64,7 +64,7 @@ async def _clear_(chat_id):
     try:
         AMBOT = await app.send_message(
                 chat_id,
-                f"**❎ 𝐐ᴜᴇᴜᴇ 𝐈s 𝐄ᴍᴘᴛʏ 𝐒ᴏ 𝐋ᴇғᴛ\n𝐅ʀᴏᴍ 𝐕ᴄ❗...",
+                f"<b>❎ 𝐐ᴜᴇᴜᴇ 𝐈s 𝐄ᴍᴘᴛʏ 𝐒ᴏ 𝐋ᴇғᴛ\n𝐅ʀᴏᴍ 𝐕ᴄ❗...</b>",
         )
         
     except Exception as e:
