@@ -60,7 +60,10 @@ asyncio.create_task(auto_leave())
 async def auto_end():
     print("Starting auto_end task...")
     while not await asyncio.sleep(30):
-        if not await is_autoend():
+        autoend_status = await is_autoend()
+        print(f"Autoend status: {autoend_status}")
+        
+        if not autoend_status:
             print("Autoend is disabled. Skipping...")
             continue
 
