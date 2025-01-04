@@ -65,12 +65,12 @@ async def assistant_banned(client: app, member: ChatMemberUpdated):
                 reply_markup=keyboard,
             )
             # Perform actions like stopping streams or loops
-            await ERA.st_stream(chat_id)
+            await ERA.stop_stream(chat_id)
             await set_loop(chat_id, 0)
             await app.unban_chat_member(chat_id, userbot.id)
             await asyncio.sleep(10)
     except UserNotParticipant:
-        await ERA.st_stream(chat_id)
+        await ERA.stop_stream(chat_id)
         await set_loop(chat_id, 0)
         await app.unban_chat_member(chat_id, userbot.id)
         await asyncio.sleep(10)
@@ -106,7 +106,7 @@ async def assistant_left(client: app, member: ChatMemberUpdated):
                 reply_markup=keyboard,
             )
 
-            await ERA.st_stream(chat_id)
+            await ERA.stop_stream(chat_id)
             await set_loop(chat_id, 0)
             await asyncio.sleep(10)
     except UserNotParticipant:
@@ -122,7 +122,7 @@ async def assistant_left(client: app, member: ChatMemberUpdated):
             caption=left_message,
             reply_markup=keyboard,
         )
-        await ERA.st_stream(chat_id)
+        await ERA.stop_stream(chat_id)
         await set_loop(chat_id, 0)
         await asyncio.sleep(10)
     except Exception as e:
@@ -134,7 +134,7 @@ async def brah(_, msg):
     chat_id = msg.chat.id
     try:
         await msg.reply("<b>😍ᴠɪᴅᴇᴏ ᴄʜᴀᴛ sᴛᴀʀᴛᴇᴅ🥳</b>")
-        await ERA.st_stream(chat_id)
+        await ERA.stop_stream(chat_id)
         await set_loop(chat_id, 0)
     except Exception as e:
         return await msg.reply(f"<b>Error {e}</b>")
@@ -146,7 +146,7 @@ async def brah2(_, msg):
     chat_id = msg.chat.id
     try:
         await msg.reply("<b>😕ᴠɪᴅᴇᴏ ᴄʜᴀᴛ ᴇɴᴅᴇᴅ💔</b>")
-        await ERA.st_stream(chat_id)
+        await ERA.stop_stream(chat_id)
         await set_loop(chat_id, 0)
     except Exception as e:
         return await msg.reply(f"<b>Error {e}</b>")
