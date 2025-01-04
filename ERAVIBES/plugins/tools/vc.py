@@ -28,13 +28,12 @@ async def assistant_banned(client: app, member: ChatMemberUpdated):
     chat_id = member.chat.id
     userbot = await get_assistant(chat_id)
     try:
-        userbot = await get_assistant(member.chat.id)
+        # Check if assistant is banned
         get = await app.get_chat_member(chat_id, userbot.id)
-        if get.status in [ChatMemberStatus.BANNED]:
+        if get.status == ChatMemberStatus.BANNED:
 
-            # Assistant bot has been banned
+            # Details about the ban
             remove_by = member.from_user.mention if member.from_user else "𝐔ɴᴋɴᴏᴡɴ 𝐔sᴇʀ"
-            chat_id = member.chat.id
             title = member.chat.title
             username = (
                 f"@{member.chat.username}" if member.chat.username else "𝐏ʀɪᴠᴀᴛᴇ 𝐂ʜᴀᴛ"
@@ -49,39 +48,40 @@ async def assistant_banned(client: app, member: ChatMemberUpdated):
                 f"║┣⪼ <b>𝐁ᴀɴ 𝐁ʏ »</b> {remove_by}\n"
                 f"╚══════════════════❍⊱❁"
             )
-
-            # Create keyboard for unban button
-            keyboard = InlineKeyboardMarkup(
+            
+            # Create unban button
+            keyboard = InlineKeyboardMarkup([
                 [
-                    [
-                        InlineKeyboardButton(
-                            "✨𝐔𝐧𝐛𝐚𝐧 𝐀𝐬𝐬𝐢𝐬𝐭𝐚𝐧𝐭✨",
-                            callback_data="unban_userbot",
-                        )
-                    ]
+                    InlineKeyboardButton(
+                        "✨Unban Assistant✨", callback_data="unban_userbot"
+                    )
                 ]
-            )
+            ])
 
-            # Send photo with the left message and keyboard
+            # Send photo with message and button
             await app.send_photo(
                 chat_id,
                 photo=random.choice(photo),
                 caption=left_message,
                 reply_markup=keyboard,
             )
-            # Perform actions like stopping streams or loops
+
+            # Stop stream and reset loop
             await ERA.stop_stream(chat_id)
             await set_loop(chat_id, 0)
+
+            # Unban the assistant
             await app.unban_chat_member(chat_id, userbot.id)
-            await asyncio.sleep(10)
+
     except UserNotParticipant:
+        # Handle if assistant is not a participant
         await ERA.stop_stream(chat_id)
         await set_loop(chat_id, 0)
         await app.unban_chat_member(chat_id, userbot.id)
-        await asyncio.sleep(10)
-        return
+
     except Exception as e:
-        return
+        # Log or handle unexpected errors
+        print(f"Error in assistant_banned: {e}")
 
 
 @app.on_chat_member_updated(filters.group, group=-8)
