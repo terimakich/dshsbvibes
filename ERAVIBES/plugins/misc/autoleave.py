@@ -70,13 +70,11 @@ async def auto_end():
                 ]
 
                 if len(call_participants_id) <= 1:
-                    dv = await app.send_message(
+                    await app.send_message(
                             chat_id,
-                            "»<i>ɴᴏ ᴏɴᴇ ɪs ʟɪsᴛᴇɴɪɴɢ. ᴊᴏɪɴ ᴛʜᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ</i>\n"
+                            "» <i>ɴᴏ ᴏɴᴇ ɪs ʟɪsᴛᴇɴɪɴɢ. ᴊᴏɪɴ ᴛʜᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ</i>\n"
                             "<i>sᴏɴɢ ᴡɪʟʟ ᴇɴᴅ ɪɴ 15 sᴇᴄᴏɴᴅs.</i>😐",
                     )
-                    await asyncio.sleep(15)
-                    await dv.delete()
 
                     call_participants_id = [
                         member.chat.id
@@ -87,7 +85,7 @@ async def auto_end():
                         await ERA.stop_stream(chat_id)
                         await app.send_message(
                             chat_id,
-                            "»<i>ɴᴏ ᴏɴᴇ ɪɴ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ, sᴏ sᴏɴɢ ɪs ᴇɴᴅɪɴɢ</i> 😒",
+                            "» <i>ɴᴏ ᴏɴᴇ ɪɴ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ, sᴏ sᴏɴɢ ɪs ᴇɴᴅɪɴɢ</i> 😒",
                         )
                         await clean(chat_id)
             except:
