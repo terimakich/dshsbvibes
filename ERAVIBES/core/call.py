@@ -67,10 +67,12 @@ async def _clear_(chat_id):
     # Sending the final message only if it hasn't been sent before
     if not message_sent.get(chat_id, False):
         try:
-            AMBOT = await app.send_message(
+            dv = await app.send_message(
                 chat_id,
                 f"<b>❎ 𝐐ᴜᴇᴜᴇ 𝐈s 𝐄ᴍᴘᴛʏ 𝐒ᴏ 𝐋ᴇғᴛ\n𝐅ʀᴏᴍ 𝐕ᴄ❗...</b>",
             )
+            await asyncio.sleep(7)
+            await dv.delete()
             # Mark the message as sent for this chat_id
             message_sent[chat_id] = True
         except Exception as e:
