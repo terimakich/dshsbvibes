@@ -99,6 +99,12 @@ HELP_8 = """
 <blockquote><b>❖ sᴏɴɢ ᴅᴏᴡɴʟᴏᴀᴅ</b> ➥</blockquote>
 <blockquote>❍ /song [sᴏɴɢ ɴᴀᴍᴇ/ʏᴛ ᴜʀʟ] ➥ <i>ᴅᴏᴡɴʟᴏᴀᴅ ᴀɴʏ ᴛʀᴀᴄᴋ ғʀᴏᴍ ʏᴏᴜᴛᴜʙᴇ ɪɴ ᴍᴘ3 ᴏʀ ᴍᴘ4 ғᴏʀᴍᴀᴛs.</i></blockquote>
 
+<blockquote><b>❖ ᴇxᴛʀᴀ ᴄᴏᴍᴍᴀɴᴅs</b> ➥</blockquote>
+<blockquote>❍ /yt [sᴏɴɢ ɴᴀᴍᴇ] ➥ <i>youtube search</i>
+❍ /font ➥ <i>ᴛᴇxᴛ ғᴏɴᴛs</i>
+❍ /yt [sᴏɴɢ ɴᴀᴍᴇ] ➥ <i>youtube search</i>
+❍ /img ᴏʀ /image ➥ <i>ɪᴍᴀɢᴇ sᴇᴀʀᴄʜ</i></blockquote>
+
 <blockquote>❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ @EraVibesXbot</blockquote>
 """
 
