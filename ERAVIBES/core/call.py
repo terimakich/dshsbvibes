@@ -41,6 +41,7 @@ from strings import get_string
 
 autoend = {}
 counter = {}
+message_sent = {} # Global or class-level variable to track if the message has been sent
 
 
 async def _clear_(chat_id):
@@ -49,7 +50,10 @@ async def _clear_(chat_id):
     await remove_active_chat(chat_id)
 
 
+
 async def _clear_(chat_id):
+    global message_sent
+
     # Clearing the chat ID data in the database
     db[chat_id] = []
 
@@ -60,15 +64,21 @@ async def _clear_(chat_id):
     except Exception as e:
         print(f"Error removing active chats: {e}")
 
-    # Sending the final message
-    try:
-        AMBOT = await app.send_message(
+    # Sending the final message only if it hasn't been sent before
+    if not message_sent.get(chat_id, False):
+        try:
+            AMBOT = await app.send_message(
                 chat_id,
                 f"<b>❎ 𝐐ᴜᴇᴜᴇ 𝐈s 𝐄ᴍᴘᴛʏ 𝐒ᴏ 𝐋ᴇғᴛ\n𝐅ʀᴏᴍ 𝐕ᴄ❗...</b>",
-        )
-        
-    except Exception as e:
-        print(f"Error sending message: {e}")
+            )
+            # Mark the message as sent for this chat_id
+            message_sent[chat_id] = True
+        except Exception as e:
+            print(f"Error sending message: {e}")
+    else:
+        # Reset the flag if needed, or handle accordingly
+        message_sent[chat_id] = False
+
 
 
 class Call(PyTgCalls):
