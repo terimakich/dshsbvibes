@@ -42,6 +42,48 @@ class Era(Client):
             )
             exit()
 
+                # Setting commands
+        if config.SET_CMDS:
+            try:
+                await self.set_bot_commands(
+                    commands=[
+                        BotCommand("start", "Start the bot"),
+                        BotCommand("help", "Get the help menu"),
+                        BotCommand("ping", "Check if the bot is alive or dead"),
+                    ],
+                    scope=BotCommandScopeAllPrivateChats(),
+                )
+                await self.set_bot_commands(
+                    commands=[
+                        BotCommand("play", "Start playing requested song"),
+                        BotCommand("stop", "Stop the current song"),
+                        BotCommand("pause", "Pause the current song"),
+                        BotCommand("resume", "Resume the paused song"),
+                        BotCommand("queue", "Check the queue of songs"),
+                        BotCommand("skip", "Skip the current song"),
+                    ],
+                    scope=BotCommandScopeAllGroupChats(),
+                )
+                await self.set_bot_commands(
+                    commands=[
+                        BotCommand("start", "❥ Start the bot"),
+                        BotCommand("ping", "❥ Check the ping"),
+                        BotCommand("help", "❥ Get help"),
+                        BotCommand("cancel", "❥ Cancel the tagging"),
+                        BotCommand("settings", "❥ Get the settings"),
+                        BotCommand("reload", "❥ Reload the bot"),
+                        BotCommand("play", "❥ Play the requested song"),
+                        BotCommand("vplay", "❥ Play video along with music"),
+                        BotCommand("end", "❥ Empty the queue"),
+                        BotCommand("stop", "❥ Stop the song"),
+                        BotCommand("song", "❥ Download the requested song"),
+                        BotCommand("yt", "❥ Youtube search"),
+                    ],
+                    scope=BotCommandScopeAllChatAdministrators(),
+                )
+            except Exception as e:
+                LOGGER(__name__).error(f"Failed to set bot commands: {e}")
+
         a = await self.get_chat_member(config.LOGGER_ID, self.id)
         if a.status != ChatMemberStatus.ADMINISTRATOR:
             LOGGER(__name__).error(
