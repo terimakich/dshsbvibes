@@ -78,7 +78,18 @@ async def stream(
                         vidid, mystic, video=status, videoid=True
                     )
                 except:
-                    raise AssistantErr(_["play_14"])
+                    await mystic.delete()
+                    await app.send_message(
+                        LOG_GROUP_ID,
+                        f"<b>ʜᴇʏ <a href='tg://user?id={OWNER_ID[0]}'>ᴏᴡɴᴇʀ</a> ᴍᴀʏ ʙᴇ ᴍʏ ᴄᴏᴏᴋɪᴇs ʜᴀs ʙᴇᴇɴ ᴅᴇᴀᴅ ᴘʟᴇᴀsᴇ ᴄʜᴇᴄᴋ ᴏɴᴇ ᴛɪᴍᴇ ʙʏ ᴘʟᴀʏ ᴀɴʏ sᴏɴɢs</b>",
+                        parse_mode="HTML"
+                    )
+                    
+                    await app.send_message(
+                        OWNER_ID[0],
+                        f"<b>ʜᴇʏ <a href='tg://user?id={OWNER_ID[0]}'>ᴏᴡɴᴇʀ</a> ᴍᴀʏ ʙᴇ ᴍʏ ᴄᴏᴏᴋɪᴇs ʜᴀs ʙᴇᴇɴ ᴅᴇᴀᴅ ᴘʟᴇᴀsᴇ ᴄʜᴇᴄᴋ ᴏɴᴇ ᴛɪᴍᴇ ʙʏ ᴘʟᴀʏ ᴀɴʏ sᴏɴɢs</b>",
+                        parse_mode="HTML"
+                    )
                 await ERA.join_call(
                     chat_id,
                     original_chat_id,
@@ -142,7 +153,19 @@ async def stream(
                 vidid, mystic, videoid=True, video=status
             )
         except:
-            raise AssistantErr(_["play_14"])
+            await mystic.delete()
+            await app.send_message(
+                LOG_GROUP_ID,
+                f"<b>ʜᴇʏ <a href='tg://user?id={OWNER_ID[0]}'>ᴏᴡɴᴇʀ</a> ᴍᴀʏ ʙᴇ ᴍʏ ᴄᴏᴏᴋɪᴇs ʜᴀs ʙᴇᴇɴ ᴅᴇᴀᴅ ᴘʟᴇᴀsᴇ ᴄʜᴇᴄᴋ ᴏɴᴇ ᴛɪᴍᴇ ʙʏ ᴘʟᴀʏ ᴀɴʏ sᴏɴɢs</b>",
+                parse_mode="HTML"
+            )
+            
+            await app.send_message(
+                OWNER_ID[0],
+                f"<b>ʜᴇʏ <a href='tg://user?id={OWNER_ID[0]}'>ᴏᴡɴᴇʀ</a> ᴍᴀʏ ʙᴇ ᴍʏ ᴄᴏᴏᴋɪᴇs ʜᴀs ʙᴇᴇɴ ᴅᴇᴀᴅ ᴘʟᴇᴀsᴇ ᴄʜᴇᴄᴋ ᴏɴᴇ ᴛɪᴍᴇ ʙʏ ᴘʟᴀʏ ᴀɴʏ sᴏɴɢs</b>",
+                parse_mode="HTML"
+            )
+            
         if await is_active_chat(chat_id):
             await put_queue(
                 chat_id,
