@@ -61,14 +61,14 @@ async def play_commnd(
     fplay,
 ):
     mystic = await message.reply_text(
-        _["play_2"].format(channel) if channel else random.choice(ANU)
+        _["play_2"].format(channel) if channel else _["play_1"]
     )
     plist_id = None
     slider = None
     plist_type = None
     spotify = None
     user_id = message.from_user.id
-    user_name = message.from_user.mention
+    user_name = message.from_user.first_name
     audio_telegram = (
         (message.reply_to_message.audio or message.reply_to_message.voice)
         if message.reply_to_message
@@ -80,18 +80,18 @@ async def play_commnd(
         else None
     )
     if audio_telegram:
-        if audio_telegram.file_size > config.TG_AUDIO_FILESIZE_LIMIT:
+        if audio_telegram.file_size > 104857600:
             return await mystic.edit_text(_["play_5"])
         duration_min = seconds_to_min(audio_telegram.duration)
         if (audio_telegram.duration) > config.DURATION_LIMIT:
             return await mystic.edit_text(
-                _["play_6"].format(config.DURATION_LIMIT_MIN, duration_min)
+                _["play_6"].format(config.DURATION_LIMIT_MIN, app.mention)
             )
         file_path = await Telegram.get_filepath(audio=audio_telegram)
         if await Telegram.download(_, message, mystic, file_path):
             message_link = await Telegram.get_link(message)
             file_name = await Telegram.get_filename(audio_telegram, audio=True)
-            dur = await Telegram.get_duration(audio_telegram)
+            dur = await Telegram.get_duration(audio_telegram, file_path)
             details = {
                 "title": file_name,
                 "link": message_link,
@@ -113,35 +113,29 @@ async def play_commnd(
                 )
             except Exception as e:
                 ex_type = type(e).__name__
-                if ex_type == "AssistantErr":
-                    err = e
-                else:
-                    err = _["general_3"].format(ex_type)
-                    LOGGER(__name__).error("An error occurred", exc_info=True)
+                err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
                 return await mystic.edit_text(err)
             return await mystic.delete()
         return
     elif video_telegram:
-        if not await is_video_allowed(message.chat.id):
-            return await mystic.edit_text(_["play_3"])
         if message.reply_to_message.document:
             try:
                 ext = video_telegram.file_name.split(".")[-1]
                 if ext.lower() not in formats:
                     return await mystic.edit_text(
-                        _["play_8"].format(f"{' | '.join(formats)}")
+                        _["play_7"].format(f"{' | '.join(formats)}")
                     )
             except:
                 return await mystic.edit_text(
-                    _["play_8"].format(f"{' | '.join(formats)}")
+                    _["play_7"].format(f"{' | '.join(formats)}")
                 )
         if video_telegram.file_size > config.TG_VIDEO_FILESIZE_LIMIT:
-            return await mystic.edit_text(_["play_9"])
+            return await mystic.edit_text(_["play_8"])
         file_path = await Telegram.get_filepath(video=video_telegram)
         if await Telegram.download(_, message, mystic, file_path):
             message_link = await Telegram.get_link(message)
             file_name = await Telegram.get_filename(video_telegram)
-            dur = await Telegram.get_duration(video_telegram)
+            dur = await Telegram.get_duration(video_telegram, file_path)
             details = {
                 "title": file_name,
                 "link": message_link,
@@ -163,11 +157,7 @@ async def play_commnd(
                 )
             except Exception as e:
                 ex_type = type(e).__name__
-                if ex_type == "AssistantErr":
-                    err = e
-                else:
-                    LOGGER(__name__).error("An error occurred", exc_info=True)
-                    err = _["general_3"].format(ex_type)
+                err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
                 return await mystic.edit_text(err)
             return await mystic.delete()
         return
