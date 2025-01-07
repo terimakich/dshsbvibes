@@ -11,7 +11,7 @@ from ERAVIBES.misc import db
 from ERAVIBES.utils.database import add_active_video_chat, is_active_chat
 from ERAVIBES.utils.exceptions import AssistantErr
 from ERAVIBES.utils.inline import aq_markup, close_markup, stream_markup
-from ERAVIBES.utils.pastebin import ERABin
+from ERAVIBES.utils.pastebin import Bin
 from ERAVIBES.utils.stream.queue import put_queue, put_queue_index
 from ERAVIBES.utils.thumbnails import get_thumb
 
@@ -116,7 +116,7 @@ async def stream(
         if count == 0:
             return
         else:
-            link = await ERABin(msg)
+            link = await Bin(msg)
             lines = msg.count("\n")
             if lines >= 17:
                 car = os.linesep.join(msg.split(os.linesep)[:17])
