@@ -32,7 +32,7 @@ MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 600000))
 
 #❖  Chat id of a group for logging bot's activities
-LOGGER_ID = int(getenv("LOGGER_ID", ""))
+LOGGER_ID = int(getenv("LOGGER_ID"))
 
 #❖ Get this value from @FallenxBot on Telegram by /id
 OWNER_ID = int(getenv("OWNER_ID", "1679112664"))
@@ -51,7 +51,7 @@ GPT_API = getenv("GPT_API", None)
 
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/IamDvis/DV-VIBES",
+    "https://github.com/Tocsiop/DV-VIBES",
 )
 
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
