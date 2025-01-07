@@ -1,4 +1,4 @@
-import os
+vimport vos
 from random import randint
 from typing import Union
 
@@ -14,7 +14,6 @@ from ERAVIBES.utils.inline import aq_markup, close_markup, stream_markup
 from ERAVIBES.utils.pastebin import Bin
 from ERAVIBES.utils.stream.queue import put_queue, put_queue_index
 from ERAVIBES.utils.thumbnails import get_thumb
-
 
 async def stream(
     _,
@@ -184,7 +183,6 @@ async def stream(
                 "video" if video else "audio",
                 forceplay=forceplay,
             )
-            chat_id = message.chat.id 
             img = await get_thumb(vidid)
             button = stream_markup(_, chat_id)
             run = await app.send_photo(
@@ -419,3 +417,4 @@ async def stream(
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "tg"
             await mystic.delete()
+            
