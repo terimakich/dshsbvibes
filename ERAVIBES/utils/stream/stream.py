@@ -1,4 +1,4 @@
-vimport vos
+import vos
 from random import randint
 from typing import Union
 
