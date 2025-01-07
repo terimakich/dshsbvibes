@@ -451,8 +451,8 @@ async def play_commnd(
             if ex_type == "AssistantErr":
                 err = e
             else:
-           #     LOGGER(__name__).error("An error occurred", exc_info=True)
-                print("An error occurred")
+                LOGGER(__name__).error("An error occurred", exc_info=True)
+              #  print("An error occurred")
 
                 err = _["general_3"].format(ex_type)
             return await mystic.edit_text(err)
