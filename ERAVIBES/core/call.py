@@ -50,8 +50,7 @@ async def _clear_(chat_id):
     await remove_active_chat(chat_id)
 
 
-
-async def _clear_(chat_id):
+async def _clear_(chat_id, leave_reason="auto"):
     global message_sent
 
     # Clearing the chat ID data in the database
@@ -64,8 +63,8 @@ async def _clear_(chat_id):
     except Exception as e:
         print(f"Error removing active chats: {e}")
 
-    # Sending the final message only if it hasn't been sent before
-    if not message_sent.get(chat_id, False):
+    # Sending the final message only if it hasn't been sent before and the leave reason is "auto"
+    if not message_sent.get(chat_id, False) and leave_reason == "auto":
         try:
             dv = await app.send_message(
                 chat_id,
