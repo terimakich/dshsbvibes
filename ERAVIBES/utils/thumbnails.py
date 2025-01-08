@@ -1,5 +1,4 @@
 import os, re, random, aiofiles, aiohttp
-
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 from unidecode import unidecode
 from youtubesearchpython.__future__ import VideosSearch
@@ -26,7 +25,7 @@ def truncate(text):
 
     text1 = text1.strip()
     text2 = text2.strip()     
-    return [text1,text2]
+    return [text1, text2]
 
 def generate_random_color():
     r = random.randint(0, 255)  # Random red value
@@ -91,7 +90,11 @@ async def get_thumb(videoid):
             duration = result["duration"]
         except:
             duration = "Unknown Mins"
-        thumbnail = result["thumbnails"][0]["url"].split("?")[0]
+        try:
+            thumbnail = result["thumbnails"][0]["url"].split("?")[0]
+        except:
+            # Agar thumbnail nahi mila, toh YOUTUBE_IMG_URL ka use karo
+            return YOUTUBE_IMG_URL
         try:
             views = result["viewCount"]["short"]
         except:
@@ -107,6 +110,9 @@ async def get_thumb(videoid):
                 f = await aiofiles.open(f"cache/thumb{videoid}.png", mode="wb")
                 await f.write(await resp.read())
                 await f.close()
+            else:
+                # Agar thumbnail download nahi hua, toh YOUTUBE_IMG_URL ka use karo
+                return YOUTUBE_IMG_URL
 
     youtube = Image.open(f"cache/thumb{videoid}.png")
     image1 = changeImageSize(1280, 720, youtube)
