@@ -104,6 +104,10 @@ async def get_thumb(videoid):
         except:
             channel = "Unknown Channel"
 
+    # Agar thumbnail nahi mila, toh YOUTUBE_IMG_URL return karo
+    if not thumbnail:
+        return YOUTUBE_IMG_URL
+
     async with aiohttp.ClientSession() as session:
         async with session.get(thumbnail) as resp:
             if resp.status == 200:
