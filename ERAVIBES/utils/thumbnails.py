@@ -118,7 +118,12 @@ async def get_thumb(videoid):
                 # Agar thumbnail download nahi hua, toh YOUTUBE_IMG_URL ka use karo
                 return YOUTUBE_IMG_URL
 
-    youtube = Image.open(f"cache/thumb{videoid}.png")
+    try:
+        youtube = Image.open(f"cache/thumb{videoid}.png")
+    except Exception as e:
+        print(f"Error opening thumbnail image: {e}")
+        return YOUTUBE_IMG_URL
+
     image1 = changeImageSize(1280, 720, youtube)
     image2 = image1.convert("RGBA")
     background = image2.filter(filter=ImageFilter.BoxBlur(20))
