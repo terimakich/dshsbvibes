@@ -3,28 +3,47 @@ from pyrogram import filters, Client
 from pyrogram.types import Message
 from pyrogram.enums import ChatType
 from ERAVIBES import app
+from deep_translator import GoogleTranslator, single_detection
 
-# Define a function to preprocess user input
-def preprocess_input(input_text):
-    # Remove special characters and convert to lowercase
-    input_text = ''.join(e for e in input_text if e.isalnum() or e.isspace()).lower()
-    return input_text
+# Initialize translator
+translator = GoogleTranslator()
+
+# Define a function to detect language
+def detect_language(text):
+    try:
+        return single_detection(text, api_key=None)
+    except:
+        return 'en'  # Default to English if detection fails
+
+# Define a function to translate text
+def translate_text(text, src_lang, dest_lang):
+    try:
+        return translator.translate(text, src=src_lang, dest=dest_lang)
+    except Exception as e:
+        print(f"Translation error: {e}")
+        return text
 
 @app.on_message(~filters.bot & ~filters.me & filters.text)
-async def chatbot(_: Client, message: Message):
+async def chatbot(client: Client, message: Message):
     if message.chat.type != ChatType.PRIVATE:
         if not message.reply_to_message:
             return
-        if message.reply_to_message.from_user.id != (await app.get_me()).id:
+        if message.reply_to_message.from_user.id != (await client.get_me()).id:
             return
         if message.text and message.text[0] in ["/", "!", "?", "."]:
             return
 
     try:
-        # Preprocess user input
-        input_text = preprocess_input(message.text)
+        # Detect user message language
+        user_lang = detect_language(message.text)
         
-        # Make API request with preprocessed input
+        # Translate user message to English
+        if user_lang != 'en':
+            input_text = translate_text(message.text, user_lang, 'en')
+        else:
+            input_text = message.text
+        
+        # Make API request with translated input
         response = requests.get("https://sugoi-api.vercel.app/chat?msg=" + input_text)
         
         # Check API response status code
@@ -34,7 +53,13 @@ async def chatbot(_: Client, message: Message):
                 data = response.json()
                 # Check if 'response' key exists in the response
                 if 'response' in data:
-                    await message.reply_text(data['response'])
+                    api_response = data['response']
+                    
+                    # Translate API response back to user's language
+                    if user_lang != 'en':
+                        api_response = translate_text(api_response, 'en', user_lang)
+                    
+                    await message.reply_text(api_response)
                 else:
                     await message.reply_text("ChatBot Error: Invalid response from API.")
             except ValueError:
