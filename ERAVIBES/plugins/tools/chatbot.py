@@ -1,29 +1,43 @@
+from ERAVIBES import app  # ERAVIBES module se app object import karen
+from pyrogram import filters
 import requests
-from pyrogram import filters, Client
-from pyrogram.types import Message
-from pyrogram.enums import ChatType
-from ERAVIBES import app
 
-@app.on_message(~filters.bot & ~filters.me & filters.text)
-async def chatbot(_: Client, message: Message):
-    if message.chat.type != ChatType.PRIVATE:
-        if not message.reply_to_message:
-            return
-        if message.reply_to_message.from_user.id != (await app.get_me()).id:
-            return
-        if message.text and message.text[0] in ["/", "!", "?", "."]:
-            return
+# Sugoi API endpoint
+SUGOI_API_URL = "https://sugoi-api.vercel.app/chat"
 
-    try:
-        response = requests.get("https://chatwithai.codesearch.workers.dev/?chat=" + message.text)
-        if response.status_code == 200:
-            data = response.json()['response']
-            await message.reply_text(data)
-        elif response.status_code == 429:
-            await message.reply_text("ChatBot Error: Too many requests. Please wait a few moments.")
-        elif response.status_code >= 500:
-            await message.reply_text("ChatBot Error: API server error. Contact us at @net_pro_max.")
-        else:
-            await message.reply_text("ChatBot Error: Unknown Error Occurred. Contact us at @net_pro_max.")
-    except requests.exceptions.RequestException as e:
-        await message.reply_text(f"ChatBot Error: Network error occurred. {e}")
+# Sweet phrases aur emojis
+SWEET_PHRASES = [
+    "Haan ji, ", "Aap bataiye na, ", "Zaroor, ", "Aapka din acha ho, ", "Mujhe sunke acha laga, ", 
+    "Aapki baatein sunkar dil khush ho gaya, ", "Aapki baatein bahut pasand aati hain, "
+]
+SWEET_EMOJIS = ["😊", "🥰", "💖", "🌸", "🌺", "💫"]
+
+# Random sweet phrase aur emoji choose karein
+import random
+def make_sweet_reply(response):
+    sweet_phrase = random.choice(SWEET_PHRASES)
+    sweet_emoji = random.choice(SWEET_EMOJIS)
+    return f"{sweet_phrase}{response} {sweet_emoji}"
+
+# Message handler (sirf private messages ke liye)
+@app.on_message(filters.private & filters.text)
+def handle_message(client, message):
+    user_message = message.text
+
+    # Sugoi API ko call karein
+    response = requests.get(f"{SUGOI_API_URL}?msg={user_message}")
+    
+    if response.status_code == 200:
+        # JSON response ko parse karein
+        json_response = response.json()
+        
+        # "response" field ko extract karein
+        ai_response = json_response.get("response", "Mujhe samajh nahi aaya.")
+        
+        # Response ko sweet banayein
+        sweet_response = make_sweet_reply(ai_response)
+        
+        # User ko reply karein
+        message.reply_text(sweet_response)
+    else:
+        message.reply_text("Mujhe kuch samajh nahi aaya. Kya aap dobara try kar sakte hain? 😊")
