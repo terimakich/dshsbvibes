@@ -49,7 +49,7 @@ async def _clear_(chat_id):
     await remove_active_video_chat(chat_id)
     await remove_active_chat(chat_id)
 
-
+'''
 async def _clear_(chat_id, leave_reason="auto"):
     global message_sent
 
@@ -79,7 +79,7 @@ async def _clear_(chat_id, leave_reason="auto"):
     else:
         # Reset the flag if needed, or handle accordingly
         message_sent[chat_id] = False
-
+'''
 
 
 class Call(PyTgCalls):
