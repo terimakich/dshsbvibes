@@ -25,6 +25,7 @@ def translate_text(text, src_lang, dest_lang):
 
 @app.on_message(~filters.bot & ~filters.me & filters.text)
 async def chatbot(client: Client, message: Message):
+    # Ignore non-private chats unless the message is a reply to the bot
     if message.chat.type != ChatType.PRIVATE:
         if not message.reply_to_message:
             return
@@ -44,7 +45,8 @@ async def chatbot(client: Client, message: Message):
             input_text = message.text
         
         # Make API request with translated input
-        response = requests.get("https://chatwithai.codesearch.workers.dev/?chat=" + input_text)
+        api_url = f"https://chatwithai.codesearch.workers.dev/?chat={input_text}"
+        response = requests.get(api_url)
         
         # Check API response status code
         if response.status_code == 200:
