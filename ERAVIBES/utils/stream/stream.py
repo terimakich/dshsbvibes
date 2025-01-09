@@ -196,6 +196,10 @@ async def stream(
                 ),
                 reply_markup=InlineKeyboardMarkup(button),
             )
+            if chat_id not in db or not db[chat_id]:
+            # Agar chat_id db mein nahi hai ya list empty hai, toh default value set karo
+                db[chat_id] = [{"mystic": None}]
+
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "stream"
     elif streamtype == "soundcloud":
