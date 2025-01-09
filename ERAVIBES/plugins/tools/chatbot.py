@@ -26,17 +26,25 @@ def handle_message(client, message):
         "system": SYSTEM_PROMPT  # System prompt add kiya gaya hai
     }
 
-    # Sugoi API ko call karein
-    response = requests.post(SUGOI_API_URL, json=data)
+    try:
+        # Sugoi API ko call karein
+        response = requests.post(SUGOI_API_URL, json=data, timeout=10)  # 10 seconds timeout
+        
+        # Check karein ki response sahi hai ya nahi
+        if response.status_code == 200:
+            json_response = response.json()
+            
+            # "response" field ko extract karein
+            if "response" in json_response:
+                ai_response = json_response["response"]
+                message.reply_text(ai_response)
+            else:
+                # Agar "response" field nahin hai
+                message.reply_text("Mujhe lagta hai API ne sahi response nahin diya. Kya aap dobara try kar sakte hain? 😊")
+        else:
+            # Agar API se error aa raha hai
+            message.reply_text(f"API se error aa raha hai. Status code: {response.status_code}. Kya aap dobara try kar sakte hain? 😊")
     
-    if response.status_code == 200:
-        # JSON response ko parse karein
-        json_response = response.json()
-        
-        # "response" field ko extract karein
-        ai_response = json_response.get("response", "Mujhe samajh nahi aaya. Kya aap dobara try kar sakte hain? 😊")
-        
-        # User ko reply karein
-        message.reply_text(ai_response)
-    else:
-        message.reply_text("Mujhe kuch samajh nahi aaya. Kya aap dobara try kar sakte hain? 😊")
+    except requests.exceptions.RequestException as e:
+        # Agar API call mein koi exception aata hai
+        message.reply_text(f"API se connect nahin ho pa raha hai. Error: {str(e)}. Kya aap dobara try kar sakte hain? 😊")
