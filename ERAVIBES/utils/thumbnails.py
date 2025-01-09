@@ -33,6 +33,24 @@ def generate_light_dark_color():
     b = random.randint(100, 200)  # Medium range for blue
     return (r, g, b)
 
+def create_rgb_neon_circle(image, center, radius, border_width, steps=30):
+    draw = ImageDraw.Draw(image)
+    
+    for step in range(steps):
+        red = int((math.sin(step / steps * math.pi * 2) * 127) + 128)
+        green = int((math.sin((step / steps * math.pi * 2) + (math.pi / 3)) * 127) + 128)
+        blue = int((math.sin((step / steps * math.pi * 2) + (math.pi * 2 / 3)) * 127) + 128)
+
+        draw.ellipse([
+            center[0] - radius - border_width + step, 
+            center[1] - radius - border_width + step, 
+            center[0] + radius + border_width - step, 
+            center[1] + radius + border_width - step
+        ], outline=(red, green, blue), width=border_width)
+
+    return image
+
+
 def crop_center_circle(img, output_size, border, crop_scale=1.5):
     half_the_width = img.size[0] / 2
     half_the_height = img.size[1] / 2
