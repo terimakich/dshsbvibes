@@ -11,7 +11,6 @@ import config
 
 from ..logging import LOGGER
 
-
 class Era(Client):
     def __init__(self):
         LOGGER(__name__).info(f"❖ Starting Bot...♥︎")
@@ -48,7 +47,7 @@ class Era(Client):
             )
             exit()
 
-                # Setting commands
+        # Setting commands
         if config.SET_CMDS == str(True):
             try:
                 await self.set_bot_commands(
@@ -68,7 +67,7 @@ class Era(Client):
                         BotCommand("vplay", "❍ 𝗽𝗹𝗮𝘆 𝘃𝗶𝗱𝗲𝗼 𝗮𝗹𝗼𝗻𝗴 𝘄𝗶𝘁𝗵 𝗺𝘂𝘀𝗶𝗰 🎬"),
                         BotCommand("song", "❍ 𝗱𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝘁𝗵𝗲 𝗿𝗲𝘃𝘂𝗲𝘀𝘁𝗲𝗱 𝘀𝗼𝗻𝗴 🎵"),
                         BotCommand("yt", "❍ 𝘆𝗼𝘂𝘁𝘂𝗯𝗲 𝘀𝗲𝗮𝗿𝗰𝗵 🔍"),
-                        
+
                     ],
                     scope=BotCommandScopeAllGroupChats(),
                 )
@@ -92,15 +91,9 @@ class Era(Client):
                     ],
                     scope=BotCommandScopeAllChatAdministrators(),
                 )
-            except:
-                pass
-        else:
-            pass
-            
             except Exception as e:
                 LOGGER(__name__).error(f"❖ Failed to set bot commands: {e}")
 
-        
         a = await self.get_chat_member(config.LOGGER_ID, self.id)
         if a.status != ChatMemberStatus.ADMINISTRATOR:
             LOGGER(__name__).error(
