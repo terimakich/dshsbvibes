@@ -71,8 +71,15 @@ async def get_thumb(videoid):
         return f"cache/{videoid}_v4.png"
 
     url = f"https://www.youtube.com/watch?v={videoid}"
-    results = await VideosSearch(url, limit=1).next()
-    result = results["result"][0]
+    try:
+        results = await VideosSearch(url, limit=1).next()
+        if not results or not results.get("result"):
+            return YOUTUBE_IMG_URL
+        result = results["result"][0]
+    except Exception as e:
+        print(f"Error fetching YouTube results: {e}")
+        return YOUTUBE_IMG_URL
+
     title = re.sub("\W+", " ", result.get("title", "Unsupported Title")).title()
     duration = result.get("duration", "Unknown Mins")
     thumbnail = result.get("thumbnails", [{}])[0].get("url", "").split("?")[0] or YOUTUBE_IMG_URL
