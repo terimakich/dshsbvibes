@@ -92,10 +92,15 @@ class Era(Client):
                     ],
                     scope=BotCommandScopeAllChatAdministrators(),
                 )
+            except:
+                pass
+        else:
+            pass
+            
             except Exception as e:
                 LOGGER(__name__).error(f"❖ Failed to set bot commands: {e}")
 
-
+        
         a = await self.get_chat_member(config.LOGGER_ID, self.id)
         if a.status != ChatMemberStatus.ADMINISTRATOR:
             LOGGER(__name__).error(
