@@ -4,7 +4,7 @@ from youtubesearchpython.__future__ import VideosSearch
 from ERAVIBES import app
 from config import YOUTUBE_IMG_URL
 
-# Load fonts once
+# Load fonts once (optimization)
 arial = ImageFont.truetype("ERAVIBES/assets/font2.ttf", 30)
 font = ImageFont.truetype("ERAVIBES/assets/font.ttf", 30)
 title_font = ImageFont.truetype("ERAVIBES/assets/font3.ttf", 45)
@@ -29,7 +29,7 @@ def truncate(text):
 def generate_light_dark_color():
     return (random.randint(100, 200), random.randint(100, 200), random.randint(100, 200))
 
-def create_rgb_neon_circle(image, center, radius, border_width, steps=10):
+def create_rgb_neon_circle(image, center, radius, border_width, steps=30):
     draw = ImageDraw.Draw(image)
     for step in range(steps):
         red = int((math.sin(step / steps * math.pi * 2) * 127) + 128)
@@ -67,9 +67,11 @@ def crop_center_circle(img, output_size, border, crop_scale=1.5):
     return create_rgb_neon_circle(result, center, radius, 10)
 
 async def get_thumb(videoid):
+    # Check if thumbnail already exists in cache
     if os.path.isfile(f"cache/{videoid}_v4.png"):
         return f"cache/{videoid}_v4.png"
 
+    # Fetch YouTube video details
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
         results = await VideosSearch(url, limit=1).next()
@@ -80,12 +82,14 @@ async def get_thumb(videoid):
         print(f"Error fetching YouTube results: {e}")
         return YOUTUBE_IMG_URL
 
+    # Extract video details
     title = re.sub("\W+", " ", result.get("title", "Unsupported Title")).title()
     duration = result.get("duration", "Unknown Mins")
     thumbnail = result.get("thumbnails", [{}])[0].get("url", "").split("?")[0] or YOUTUBE_IMG_URL
     views = result.get("viewCount", {}).get("short", "Unknown Views")
     channel = result.get("channel", {}).get("name", "Unknown Channel")
 
+    # Download thumbnail
     async with aiohttp.ClientSession() as session:
         async with session.get(thumbnail) as resp:
             if resp.status == 200:
@@ -93,24 +97,30 @@ async def get_thumb(videoid):
                     await f.write(await resp.read())
 
     try:
+        # Open downloaded thumbnail
         youtube = Image.open(f"cache/thumb{videoid}.png")
+
+        # Resize and process image
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
-        background = image2.filter(filter=ImageFilter.BoxBlur(10))
+        background = image2.filter(filter=ImageFilter.BoxBlur(20))
         enhancer = ImageEnhance.Brightness(background)
-        background = enhancer.enhance(0.8)
+        background = enhancer.enhance(0.6)
         draw = ImageDraw.Draw(background)
 
+        # Add circular thumbnail with neon effect
         circle_thumbnail = crop_center_circle(youtube, 400, 20)
         circle_thumbnail = circle_thumbnail.resize((400, 400))
         background.paste(circle_thumbnail, (120, 160), circle_thumbnail)
 
+        # Add text and other details
         title1 = truncate(title)
         draw.text((565, 180), title1[0], fill=(255, 255, 255), font=title_font)
         draw.text((565, 230), title1[1], fill=(255, 255, 255), font=title_font)
         draw.text((565, 320), f"{channel}  |  {views[:23]}", (255, 255, 255), font=arial)
         draw.text((10, 10), "ERA VIBES", fill="yellow", font=font)
 
+        # Add progress bar
         line_length = 580
         red_length = int(line_length * 0.6)
         draw.line([(565, 380), (565 + red_length, 380)], fill="red", width=9)
@@ -119,14 +129,17 @@ async def get_thumb(videoid):
         draw.text((565, 400), "00:00", (255, 255, 255), font=arial)
         draw.text((1080, 400), duration, (255, 255, 255), font=arial)
 
+        # Add play icons
         play_icons = Image.open("ERAVIBES/assets/play_icons.png").resize((580, 62))
         background.paste(play_icons, (565, 450), play_icons)
 
+        # Add stroke effect
         stroke_width = 15
         stroke_color = generate_light_dark_color()
         stroke_image = Image.new("RGBA", (1280 + 2 * stroke_width, 720 + 2 * stroke_width), stroke_color)
         stroke_image.paste(background, (stroke_width, stroke_width))
 
+        # Save and return the final thumbnail
         os.remove(f"cache/thumb{videoid}.png")
         stroke_image.save(f"cache/{videoid}_v4.png")
         return f"cache/{videoid}_v4.png"
