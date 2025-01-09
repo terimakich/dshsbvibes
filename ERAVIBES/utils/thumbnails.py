@@ -48,11 +48,13 @@ def crop_center_circle(img, output_size, border, crop_scale=1.5):
 
     img = img.resize((output_size - 2*border, output_size - 2*border))
 
-    # Generate a new random color for the background each time
-    random_color = generate_random_color()
+    # Generate 3 random colors
+    random_colors = [generate_random_color() for _ in range(3)]
+    # Second color will be used for stroke_image
+    stroke_color = random_colors[1]
 
-    # Create final_img with the random background color
-    final_img = Image.new("RGBA", (output_size, output_size), random_color)
+    # Create final_img with the first random color as background
+    final_img = Image.new("RGBA", (output_size, output_size), random_colors[0])
 
     # Create a mask for the main image
     mask_main = Image.new("L", (output_size - 2*border, output_size - 2*border), 0)
@@ -62,16 +64,30 @@ def crop_center_circle(img, output_size, border, crop_scale=1.5):
     # Paste the cropped image onto the final_img using the mask
     final_img.paste(img, (border, border), mask_main)
 
+    # Draw a multi-colored outline (border) around the circle
+    draw_border = ImageDraw.Draw(final_img)
+    border_thickness = 5  # Outline thickness
+    for i, color in enumerate(random_colors):
+        # Draw concentric circles with different colors
+        draw_border.ellipse(
+            [
+                (border - border_thickness * (i + 1), border - border_thickness * (i + 1)),
+                (output_size - border + border_thickness * (i + 1), output_size - border + border_thickness * (i + 1))
+            ],
+            outline=color,
+            width=border_thickness
+        )
+
     # Create a mask for the border
     mask_border = Image.new("L", (output_size, output_size), 0)
-    draw_border = ImageDraw.Draw(mask_border)
-    draw_border.ellipse((0, 0, output_size, output_size), fill=255)
+    draw_mask = ImageDraw.Draw(mask_border)
+    draw_mask.ellipse((0, 0, output_size, output_size), fill=255)
 
     # Apply the border mask to the final image
     result = Image.composite(final_img, Image.new("RGBA", final_img.size, (0, 0, 0, 0)), mask_border)
 
-    # Return the result along with the random color
-    return result, random_color
+    # Return the result and the second random color (for stroke_image)
+    return result, stroke_color
     
 async def get_thumb(videoid):
     if os.path.isfile(f"cache/{videoid}_v4.png"):
@@ -126,6 +142,7 @@ async def get_thumb(videoid):
         return YOUTUBE_IMG_URL
 
 
+    youtube = Image.open(f"cache/thumb{videoid}.png")
     image1 = changeImageSize(1280, 720, youtube)
     image2 = image1.convert("RGBA")
     background = image2.filter(filter=ImageFilter.BoxBlur(20))
@@ -136,8 +153,8 @@ async def get_thumb(videoid):
     font = ImageFont.truetype("ERAVIBES/assets/font.ttf", 30)
     title_font = ImageFont.truetype("ERAVIBES/assets/font3.ttf", 45)
 
-    # Get the circular thumbnail and the random color
-    circle_thumbnail, random_color = crop_center_circle(youtube, 400, 20)
+    # Get the circular thumbnail and the second random color
+    circle_thumbnail, stroke_color = crop_center_circle(youtube, 400, 20)
     circle_thumbnail = circle_thumbnail.resize((400, 400))
     circle_position = (120, 160)
     background.paste(circle_thumbnail, circle_position, circle_thumbnail)
@@ -174,9 +191,9 @@ async def get_thumb(videoid):
     play_icons = play_icons.resize((580, 62))
     background.paste(play_icons, (text_x_position, 450), play_icons)
 
-    # Add a stroke to the entire image using the same random color
+    # Add a stroke to the entire image using the second random color
     stroke_width = 10
-    stroke_image = Image.new("RGBA", (1280 + 2*stroke_width, 720 + 2*stroke_width), random_color)
+    stroke_image = Image.new("RGBA", (1280 + 2*stroke_width, 720 + 2*stroke_width), stroke_color)
     stroke_image.paste(background, (stroke_width, stroke_width))
 
     try:
