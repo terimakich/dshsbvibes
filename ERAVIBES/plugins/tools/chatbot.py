@@ -48,12 +48,17 @@ async def chatbot(client: Client, message: Message):
         api_url = f"https://chatwithai.codesearch.workers.dev/?chat={input_text}"
         response = requests.get(api_url)
         
+        # Debug: Print the raw API response
+        print("API Response:", response.text)
+        
         # Check API response status code
         if response.status_code == 200:
             try:
                 # Attempt to parse JSON response
                 data = response.json()
-                # Check if 'response' key exists in the response
+                print("Parsed API Response:", data)  # Debug: Print parsed JSON
+                
+                # Check if the expected key exists in the response
                 if 'response' in data:
                     api_response = data['response']
                     
@@ -63,14 +68,18 @@ async def chatbot(client: Client, message: Message):
                     
                     await message.reply_text(api_response)
                 else:
-                    await message.reply_text("ChatBot Error: Invalid response from API.")
+                    # If the key is missing, check for other possible keys or error messages
+                    if 'message' in data:
+                        await message.reply_text(f"ChatBot Error: {data['message']}")
+                    else:
+                        await message.reply_text("ChatBot Error: Invalid response from API. Missing 'response' key.")
             except ValueError:
-                await message.reply_text("ChatBot Error: Failed to parse API response.")
+                await message.reply_text("ChatBot Error: Failed to parse API response as JSON.")
         elif response.status_code == 429:
             await message.reply_text("ChatBot Error: Too many requests. Please wait a few moments.")
         elif response.status_code >= 500:
             await message.reply_text("ChatBot Error: API server error. Contact us at @net_pro_max.")
         else:
-            await message.reply_text("ChatBot Error: Unknown Error Occurred. Contact us at @net_pro_max.")
+            await message.reply_text(f"ChatBot Error: Unknown Error Occurred. Status Code: {response.status_code}")
     except requests.exceptions.RequestException as e:
         await message.reply_text(f"ChatBot Error: Network error occurred. {e}")
