@@ -44,7 +44,7 @@ async def chatbot(client: Client, message: Message):
             input_text = message.text
         
         # Make API request with translated input
-        response = requests.get("https://sugoi-api.vercel.app/chat?msg=" + input_text)
+        response = requests.get("https://chatwithai.codesearch.workers.dev/api/chat?msg=" + input_text)
         
         # Check API response status code
         if response.status_code == 200:
