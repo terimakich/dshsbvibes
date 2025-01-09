@@ -79,6 +79,7 @@ async def get_thumb(videoid):
 
     url = f"https://www.youtube.com/watch?v={videoid}"
     results = VideosSearch(url, limit=1)
+    thumbnail = None  # Initialize thumbnail with None
     for result in (await results.next())["result"]:
         try:
             title = result["title"]
@@ -94,7 +95,7 @@ async def get_thumb(videoid):
             thumbnail = result["thumbnails"][0]["url"].split("?")[0]
         except:
             # Agar thumbnail nahi mila, toh YOUTUBE_IMG_URL ka use karo
-            return YOUTUBE_IMG_URL
+            thumbnail = None
         try:
             views = result["viewCount"]["short"]
         except:
@@ -123,6 +124,7 @@ async def get_thumb(videoid):
     except Exception as e:
         print(f"Error opening thumbnail image: {e}")
         return YOUTUBE_IMG_URL
+
 
     image1 = changeImageSize(1280, 720, youtube)
     image2 = image1.convert("RGBA")
