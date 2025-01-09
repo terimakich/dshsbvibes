@@ -1,4 +1,4 @@
-import os, re, random, aiofiles, aiohttp
+import os, re, random, aiofiles, aiohttp, math
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 from unidecode import unidecode
 from youtubesearchpython.__future__ import VideosSearch
