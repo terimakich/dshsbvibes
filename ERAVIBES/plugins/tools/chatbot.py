@@ -4,6 +4,12 @@ from pyrogram.types import Message
 from pyrogram.enums import ChatType
 from ERAVIBES import app
 
+# Define a function to preprocess user input
+def preprocess_input(input_text):
+    # Remove special characters and convert to lowercase
+    input_text = ''.join(e for e in input_text if e.isalnum() or e.isspace()).lower()
+    return input_text
+
 @app.on_message(~filters.bot & ~filters.me & filters.text)
 async def chatbot(_: Client, message: Message):
     if message.chat.type != ChatType.PRIVATE:
@@ -15,10 +21,24 @@ async def chatbot(_: Client, message: Message):
             return
 
     try:
-        response = requests.get("https://sugoi-api.vercel.app/chat?msg=" + message.text)
+        # Preprocess user input
+        input_text = preprocess_input(message.text)
+        
+        # Make API request with preprocessed input
+        response = requests.get("https://sugoi-api.vercel.app/chat?msg=" + input_text)
+        
+        # Check API response status code
         if response.status_code == 200:
-            data = response.json()['response']
-            await message.reply_text(data)
+            try:
+                # Attempt to parse JSON response
+                data = response.json()
+                # Check if 'response' key exists in the response
+                if 'response' in data:
+                    await message.reply_text(data['response'])
+                else:
+                    await message.reply_text("ChatBot Error: Invalid response from API.")
+            except ValueError:
+                await message.reply_text("ChatBot Error: Failed to parse API response.")
         elif response.status_code == 429:
             await message.reply_text("ChatBot Error: Too many requests. Please wait a few moments.")
         elif response.status_code >= 500:
