@@ -48,7 +48,7 @@ class Era(Client):
             exit()
 
         # Setting commands
-        if config.SET_CMDS == str(True):
+        if config.SET_CMDS == str(true):
             try:
                 await self.set_bot_commands(
                     commands=[
