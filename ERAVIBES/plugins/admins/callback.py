@@ -344,10 +344,18 @@ async def del_back_playlist(client, CallbackQuery, _):
                     ),
                     reply_markup=InlineKeyboardMarkup(button),
                 )
+            
+                # Ensure db[chat_id] is initialized as a list with at least one dictionary
+                if chat_id not in db:
+                    db[chat_id] = [{}]  # Initialize with an empty dictionary
+                elif not db[chat_id]:  # If the list is empty
+                    db[chat_id].append({})  # Add an empty dictionary
+            
+                # Now safely assign values
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "stream"
+            
             await CallbackQuery.edit_message_text(txt, reply_markup=close_markup(_))
-
 
 async def markup_timer():
     while not await asyncio.sleep(7):
