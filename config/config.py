@@ -67,9 +67,9 @@ SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+7ehnJA3aMb84OGNl")
 AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", "True")
 
 #❖ Time after which you're assistant account will leave chats automatically.
-AUTO_LEAVE_ASSISTANT_TIME = int(
+'''AUTO_LEAVE_ASSISTANT_TIME = int(
     getenv("ASSISTANT_LEAVE_TIME", 1800)
-)  # Remember to give value in Seconds
+) ''' # Remember to give value in Seconds
 
 #❖ Get this credentials from https://developer.spotify.com/dashboard
 SPOTIFY_CLIENT_ID = getenv("SPOTIFY_CLIENT_ID", "e319091f771445b18c029299505d5d4f")
