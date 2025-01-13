@@ -345,11 +345,17 @@ async def del_back_playlist(client, CallbackQuery, _):
                     reply_markup=InlineKeyboardMarkup(button),
                 )
             
+                # Log the state of db[chat_id] for debugging
+                logger.info(f"db[chat_id] before initialization: {db.get(chat_id)}")
+            
                 # Ensure db[chat_id] is initialized as a list with at least one dictionary
                 if chat_id not in db:
                     db[chat_id] = [{}]  # Initialize with an empty dictionary
                 elif not db[chat_id]:  # If the list is empty
                     db[chat_id].append({})  # Add an empty dictionary
+            
+                # Log the state of db[chat_id] after initialization
+                logger.info(f"db[chat_id] after initialization: {db[chat_id]}")
             
                 # Now safely assign values
                 db[chat_id][0]["mystic"] = run
