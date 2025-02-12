@@ -3,7 +3,7 @@ import re
 import subprocess
 import sys
 import traceback
-from inspect import getfullargspec
+from inspect import signature
 from io import StringIO
 from time import time
 
@@ -12,6 +12,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from ERAVIBES import app
 from config import OWNER_ID
+#from ERAVIBES.misc import SUDOERS
 
 
 async def aexec(code, client, message):
@@ -24,7 +25,12 @@ async def aexec(code, client, message):
 
 async def edit_or_reply(msg: Message, **kwargs):
     func = msg.edit_text if msg.from_user.is_self else msg.reply
-    spec = getfullargspec(func.__wrapped__).args
+    sig = signature(func)
+    spec = []
+    for param in sig.parameters.values():
+        if param.name in ('self', 'cls'):
+            continue
+        spec.append(param.name)
     await func(**{k: v for k, v in kwargs.items() if k in spec})
 
 
@@ -36,7 +42,7 @@ async def edit_or_reply(msg: Message, **kwargs):
 )
 @app.on_message(
     filters.command(["eval", "ev", "Ev", "Eval"], prefixes=["/", "!", ".", ""])
-    & filters.user(OWNER_ID)
+    & filters.user(OWNER_ID) #SUDOERS 
     & ~filters.forwarded
     & ~filters.via_bot
 )
@@ -146,7 +152,7 @@ async def forceclose_command(_, CallbackQuery):
 )
 @app.on_message(
     filters.command(["sh", "Sh"], prefixes=["/", "!", ".", ""])
-    & filters.user(OWNER_ID)
+    & filters.user(OWNER_ID) #SUDOERS
     & ~filters.forwarded
     & ~filters.via_bot
 )
