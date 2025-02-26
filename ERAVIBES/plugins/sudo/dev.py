@@ -41,7 +41,7 @@ async def edit_or_reply(msg: Message, **kwargs):
     & ~filters.via_bot
 )
 @app.on_message(
-    filters.command(["eval", "ev", "Ev", "Eval"], prefixes=["/", "!", ".", ""])
+    filters.command(["eval", "ev"], prefixes=["/", "!", ".", ""])
     & filters.user(OWNER_ID) #SUDOERS 
     & ~filters.forwarded
     & ~filters.via_bot
@@ -151,7 +151,7 @@ async def forceclose_command(_, CallbackQuery):
     & ~filters.via_bot
 )
 @app.on_message(
-    filters.command(["sh", "Sh"], prefixes=["/", "!", ".", ""])
+    filters.command(["sh"], prefixes=["/", "!", ".", ""])
     & filters.user(OWNER_ID) #SUDOERS
     & ~filters.forwarded
     & ~filters.via_bot
