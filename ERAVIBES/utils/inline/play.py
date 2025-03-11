@@ -39,9 +39,9 @@ def stream_markup_timer(_, chat_id, played, dur):
             )
         ],
         [
-            InlineKeyboardButton(text="⏸ pause", callback_data=f"ADMIN Pause|{chat_id}"),
-            InlineKeyboardButton(text="⏹ stop", callback_data=f"ADMIN Stop|{chat_id}"),
-            InlineKeyboardButton(text="▶ play", callback_data=f"ADMIN Resume|{chat_id}")
+            InlineKeyboardButton(text="⏸ ᴘᴀᴜsᴇ", callback_data=f"ADMIN Pause|{chat_id}"),
+            InlineKeyboardButton(text="⏹ sᴛᴏᴘ", callback_data=f"ADMIN Stop|{chat_id}"),
+            InlineKeyboardButton(text="▶ ᴘʟᴀʏ", callback_data=f"ADMIN Resume|{chat_id}")
         ],
         [
             InlineKeyboardButton("˹ ᴜᴘᴅᴧᴛᴇ ˼", url="https://t.me/net_pro_max"),
@@ -59,9 +59,9 @@ def stream_markup_timer(_, chat_id, played, dur):
 def stream_markup(_, chat_id):
     buttons = [
         [
-            InlineKeyboardButton(text="⏸ pause", callback_data=f"ADMIN Pause|{chat_id}"),
-            InlineKeyboardButton(text="⏹ stop", callback_data=f"ADMIN Stop|{chat_id}"),
-            InlineKeyboardButton(text="▶ play", callback_data=f"ADMIN Resume|{chat_id}")
+            InlineKeyboardButton(text="⏸ ᴘᴀᴜsᴇ", callback_data=f"ADMIN Pause|{chat_id}"),
+            InlineKeyboardButton(text="⏹ sᴛᴏᴘ", callback_data=f"ADMIN Stop|{chat_id}"),
+            InlineKeyboardButton(text="▶ ᴘʟᴀʏ", callback_data=f"ADMIN Resume|{chat_id}")
         ],
         [
             InlineKeyboardButton("˹ ᴜᴘᴅᴧᴛᴇ ˼", url="https://t.me/net_pro_max"),
