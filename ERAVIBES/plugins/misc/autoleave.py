@@ -46,28 +46,23 @@ asyncio.create_task(auto_leave())
 
 async def auto_end():
     while True:
-        await asyncio.sleep(5)  # Ensure sleep is awaited properly
+        await asyncio.sleep(5)
         ender = await is_autoend()
         if not ender:
             continue
-        
-        for chat_id in list(autoend.keys()):  # Iterate safely over keys
+        for chat_id in list(autoend.keys()):
             timer = autoend.get(chat_id)
             if not timer:
                 continue
-            
             if datetime.now() > timer:
-                if await is_active_chat(chat_id):  # Check if chat is active
-                    autoend[chat_id] = datetime.now() + timedelta(minutes=1)  # Extend timer if active
-                    continue  # Skip ending if active
-                
-                autoend.pop(chat_id, None)  # Remove from autoend safely
+                if await is_active_chat(chat_id):
+                    continue
+                autoend.pop(chat_id, None)
                 try:
                     await ERA.stop_stream(chat_id)
                 except Exception as e:
                     print(f"Error stopping stream for {chat_id}: {e}")
                     continue
-                
                 try:
                     await app.send_message(
                         chat_id,
@@ -77,5 +72,4 @@ async def auto_end():
                     print(f"Error sending message to {chat_id}: {e}")
                     continue
 
-# Start the auto_end task
 asyncio.create_task(auto_end())
