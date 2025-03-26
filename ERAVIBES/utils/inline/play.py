@@ -97,27 +97,6 @@ def track_markup(_, videoid, user_id, channel, fplay):
 
 
 
-def stream_markup(_, chat_id):
-    buttons = [
-        [
-            InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
-            InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
-            InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
-            InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
-        ],
-       [
-            InlineKeyboardButton(
-                text="✰ ᴜᴘᴅᴧᴛᴇ ✰", url=f"t.me/ai_image_junction"
-            ),
-            InlineKeyboardButton(
-                text="✰ sᴜᴘᴘᴏꝛᴛ ✰", url=f"t.me/+cXIPgHSuJnxiNjU1"
-            )
-        ],
-        [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
-    ]
-    return buttons
-
-
 def playlist_markup(_, videoid, user_id, ptype, channel, fplay):
     buttons = [
         [
