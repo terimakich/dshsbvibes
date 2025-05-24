@@ -1,5 +1,6 @@
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from ERAVIBES.misc import SUDOERS
 from ERAVIBES import app
 
 SAFE_CHAR_MAP = {
@@ -31,7 +32,7 @@ def convert_to_smallcap(text, style="safe"):
         char_map = SAFE_CHAR_MAP
     return ''.join([char_map.get(c, c) for c in text])
 
-@app.on_message(filters.command(["work", "w"], prefixes=["/", "!", ".", ""]))
+@app.on_message(filters.command(["work", "w"], prefixes=["/", "!", ".", ""]) & SUDOERS)
 async def work_command(c, m):
     try:
         text = m.text.split(' ', 1)[1]
