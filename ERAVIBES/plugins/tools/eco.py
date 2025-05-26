@@ -1,9 +1,11 @@
 from pyrogram import Client, filters
-from config import OWNER_ID
+#from config import OWNER_ID
+from ERAVIBES.misc import SUDOERS
 from ERAVIBES import app 
 
 # /eco command handler
-@app.on_message(filters.command(["eco", "e"], prefixes=["/", "!", ".", ""]) & filters.reply & filters.user(OWNER_ID))
+#@app.on_message(filters.command(["eco", "e"], prefixes=["/", "!", ".", ""]) & filters.reply & filters.user(OWNER_ID))
+@app.on_message(filters.command(["eco", "e"], prefixes=["/", "!", ".", ""]) & filters.reply & SUDOERS)
 async def eco_reply(client, message):
     try:
         if not message.reply_to_message:
