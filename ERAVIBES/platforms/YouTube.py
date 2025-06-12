@@ -102,7 +102,8 @@ async def _download_from_maybechiku_api(link: str, file_extension: str, vid_id: 
         tuple: (file_path: str, direct: bool) on success, (None, False) on failure.
                'direct' is True if downloaded directly, False otherwise.
     """
-    maybechiku_base_url = "[https://youtube.maybechiku.workers.dev/](https://youtube.maybechiku.workers.dev/)"
+    # Corrected URL string: Removed markdown formatting
+    maybechiku_base_url = "https://youtube.maybechiku.workers.dev/"
     query_string = {"url": link}
 
     # If vid_id is not provided, try to extract it from the link
@@ -164,10 +165,11 @@ class YouTubeAPI:
     playlists, and downloading content.
     """
     def __init__(self):
-        self.base = "[https://www.youtube.com/watch?v=](https://www.youtube.com/watch?v=)"
+        # Corrected URL string: Removed markdown formatting
+        self.base = "https://www.youtube.com/watch?v="
         self.regex = r"(?:youtube\.com|youtu\.be)"
-        self.status = "[https://www.youtube.com/oembed?url=](https://www.youtube.com/oembed?url=)"
-        self.listbase = "[https://youtube.com/playlist?list=](https://youtube.com/playlist?list=)"
+        self.status = "https://www.youtube.com/oembed?url="
+        self.listbase = "https://youtube.com/playlist?list="
         self.reg = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
     
     async def exists(self, link: str, videoid: Union[bool, str] = None):
