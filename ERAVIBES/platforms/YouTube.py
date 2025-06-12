@@ -365,6 +365,11 @@ class YouTubeAPI:
         Prioritizes the maybechiku API for faster downloads, falls back to yt-dlp.
         """
         
+        # Check if the mystic (chat_id) is valid before proceeding with download attempts
+        if mystic is None:
+            print(f"ERROR: 'mystic' (chat_id) is None for link: {link} or videoid: {videoid}. Cannot proceed with download or send message downstream.")
+            return None, False
+
         # Determine the full YouTube link to use for download operations
         if videoid:
             full_link = self.base + videoid
