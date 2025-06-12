@@ -7,7 +7,16 @@ from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch
 from ERAVIBES.utils.formatters import time_to_seconds
+from ERAVIBES.utils.database import is_on_off
 from typing import Union
+
+try:
+    from moviepy.editor import VideoFileClip
+except ImportError:
+    print("WARNING: moviepy library not found. Please install it using 'pip install moviepy'.")
+    print("WARNING: Also ensure FFmpeg is installed and accessible in your system's PATH.")
+    VideoFileClip = None
+
 
 async def _download_from_maybechiku_api(link: str, file_extension: str, vid_id: str = None):
     maybechiku_base_url = "https://youtube.maybechiku.workers.dev/"
@@ -20,11 +29,11 @@ async def _download_from_maybechiku_api(link: str, file_extension: str, vid_id: 
         else:
             vid_id = "unknown_id_" + str(hash(link))[:8]
 
-    file_path = os.path.join("downloads", f"{vid_id}.{file_extension}")
+    download_file_path = os.path.join("downloads", f"{vid_id}.mp4") 
 
-    if os.path.exists(file_path):
-        print(f"DEBUG: File already exists: {file_path}. Skipping download.")
-        return file_path, True
+    if os.path.exists(download_file_path):
+        print(f"DEBUG: File already exists: {download_file_path}. Skipping download.")
+        return download_file_path, True
 
     async with aiohttp.ClientSession() as session:
         try:
@@ -41,14 +50,14 @@ async def _download_from_maybechiku_api(link: str, file_extension: str, vid_id: 
                         
                         os.makedirs("downloads", exist_ok=True)
                         
-                        with open(file_path, "wb") as f:
+                        with open(download_file_path, "wb") as f:
                             while True:
                                 chunk = await file_response.content.read(8192)
                                 if not chunk:
                                     break
                                 f.write(chunk)
-                        print(f"DEBUG: Successfully downloaded via Maybechiku API to: {file_path}")
-                        return file_path, True
+                        print(f"DEBUG: Successfully downloaded via Maybechiku API to: {download_file_path}")
+                        return download_file_path, True
                 else:
                     print(f"ERROR: Maybechiku API reports failure or missing downloadURL for {link}: {data}")
                     return None, False
@@ -62,6 +71,32 @@ async def _download_from_maybechiku_api(link: str, file_extension: str, vid_id: 
             print(f"ERROR: An unexpected error occurred with Maybechiku API for {link}: {e}")
             return None, False
 
+async def _convert_mp4_to_mp3(mp4_file_path: str, mp3_output_path: str) -> bool:
+    if not VideoFileClip:
+        print("ERROR: moviepy library available nahi hai, MP4 se MP3 conversion nahi ho sakta.")
+        return False
+    
+    if not os.path.exists(mp4_file_path):
+        print(f"ERROR: MP4 file '{mp4_file_path}' conversion ke liye nahi mila.")
+        return False
+
+    loop = asyncio.get_running_loop()
+    
+    def sync_convert():
+        try:
+            video_clip = VideoFileClip(mp4_file_path)
+            audio_clip = video_clip.audio
+            audio_clip.write_audiofile(mp3_output_path, logger=None)
+            audio_clip.close()
+            video_clip.close()
+            print(f"DEBUG: Successfully converted '{mp4_file_path}' to '{mp3_output_path}'")
+            return True
+        except Exception as e:
+            print(f"ERROR: MP4 se MP3 convert karte waqt error aayi: {e}")
+            return False
+
+    success = await loop.run_in_executor(None, sync_convert)
+    return success
 
 class YouTubeAPI:
     def __init__(self):
@@ -199,28 +234,81 @@ class YouTubeAPI:
         thumbnail = result[query_type]["thumbnails"][0]["url"].split("?")[0]
         return title, duration_min, thumbnail, vidid
 
-    async def download(self, link: str, mystic, videoid: Union[bool, str] = None):
-        
+    async def download(self, link: str, mystic, videoid: Union[bool, str] = None, songvideo: bool = False, songaudio: bool = False, video: bool = False):
         if mystic is None:
             print(f"ERROR: 'mystic' (chat_id) is None for link: {link} or videoid: {videoid}. Cannot proceed with download or send message downstream.")
             return None, False
 
-        if videoid:
-            full_link = self.base + videoid
-        else:
-            full_link = link
+        title, duration_min, duration_sec, thumbnail, actual_vidid = await self.details(link, videoid)
+        if not actual_vidid:
+            print(f"ERROR: Video details nahi mil payi link ke liye: {link} ya videoid: {videoid}")
+            return None, False
+
+        full_link = self.base + actual_vidid
         
         downloaded_file = None
         direct = False
 
-        file_ext = "mp4"
+        print(f"INFO: Download karne ki koshish kar rahe hain {full_link} type ke liye: songvideo={songvideo}, songaudio={songaudio}, video={video}")
 
-        print(f"INFO: Attempting download of {full_link} via Maybechiku API...")
-        downloaded_file, direct = await _download_from_maybechiku_api(full_link, file_ext, videoid)
-        
-        if not downloaded_file:
-            print(f"ERROR: Maybechiku API failed for {full_link}. No fallback (yt-dlp has been removed).")
-            return None, False
-
-        print(f"FINAL DOWNLOAD STATUS: Download completed for link: {full_link} at {downloaded_file}")
-        return downloaded_file, direct
+        if songvideo:
+            downloaded_mp4_path, direct = await _download_from_maybechiku_api(full_link, "mp4", actual_vidid)
+            if downloaded_mp4_path:
+                print(f"INFO: Song video downloaded as MP4: {downloaded_mp4_path}")
+                return downloaded_mp4_path, True
+            else:
+                return None, False
+        elif songaudio:
+            downloaded_mp4_path, direct = await _download_from_maybechiku_api(full_link, "mp4", actual_vidid)
+            
+            if downloaded_mp4_path:
+                mp3_output_path = os.path.join("downloads", f"{actual_vidid}.mp3")
+                print(f"INFO: MP4 downloaded, ab MP3 conversion ki koshish kar rahe hain '{downloaded_mp4_path}' to '{mp3_output_path}'")
+                
+                conversion_success = await _convert_mp4_to_mp3(downloaded_mp4_path, mp3_output_path)
+                
+                if conversion_success:
+                    try:
+                        os.remove(downloaded_mp4_path)
+                        print(f"DEBUG: Original MP4 file '{downloaded_mp4_path}' delete kar diya gaya.")
+                    except OSError as e:
+                        print(f"WARNING: MP4 file delete karte waqt error: {e}")
+                    return mp3_output_path, True
+                else:
+                    print(f"ERROR: MP4 to MP3 conversion failed for {full_link}.")
+                    return None, False
+            else:
+                print(f"ERROR: Maybechiku API se MP4 download nahi ho paya {full_link} ke liye, isliye MP3 bhi nahi ban paya.")
+                return None, False
+        elif video:
+            if await is_on_off(1):
+                downloaded_file, direct = await _download_from_maybechiku_api(full_link, "mp4", actual_vidid)
+            else:
+                downloaded_file, direct = await _download_from_maybechiku_api(full_link, "mp4", actual_vidid)
+            
+            if downloaded_file:
+                return downloaded_file, True
+            else:
+                return None, False
+        else:
+            downloaded_mp4_path, direct = await _download_from_maybechiku_api(full_link, "mp4", actual_vidid)
+            
+            if downloaded_mp4_path:
+                mp3_output_path = os.path.join("downloads", f"{actual_vidid}.mp3")
+                print(f"INFO: Default audio download (MP3) request. MP4 downloaded, ab MP3 conversion ki koshish kar rahe hain '{downloaded_mp4_path}' to '{mp3_output_path}'")
+                
+                conversion_success = await _convert_mp4_to_mp3(downloaded_mp4_path, mp3_output_path)
+                
+                if conversion_success:
+                    try:
+                        os.remove(downloaded_mp4_path)
+                        print(f"DEBUG: Original MP4 file '{downloaded_mp4_path}' delete kar diya gaya.")
+                    except OSError as e:
+                        print(f"WARNING: MP4 file delete karte waqt error: {e}")
+                    return mp3_output_path, True
+                else:
+                    print(f"ERROR: Default audio download (MP3) conversion failed for {full_link}.")
+                    return None, False
+            else:
+                print(f"ERROR: Default audio download (MP3) ke liye Maybechiku API se MP4 download nahi ho paya {full_link}.")
+                return None, False
