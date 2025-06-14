@@ -22,7 +22,7 @@ unidecode
 pyromod
 py-tgcalls==2.0.6
 ntgcalls==1.2.3
-python-dotenv
+python-dotenv==1.0.0
 pyyaml
 requests
 speedtest-cli
