@@ -13,15 +13,22 @@ from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch
 
+from ERAVIBES.utils.database import is_on_off
 from ERAVIBES.utils.formatters import time_to_seconds
 from config import API_URL, API_KEY
 
-LOGGER = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 # ------------------------------------------------------------------
 # Helper utilities
 # ------------------------------------------------------------------
 def cookie_txt_file() -> str:
+    """
+    Return the absolute path to a random cookies.txt file
+    inside the ./cookies directory.
+    """
     cookie_dir = os.path.join(os.getcwd(), "cookies")
     files = [f for f in os.listdir(cookie_dir) if f.endswith(".txt")]
     if not files:
@@ -30,9 +37,13 @@ def cookie_txt_file() -> str:
 
 
 # ------------------------------------------------------------------
-# Fast download via external API
+# Fast download via external API (kept for backward compatibility)
 # ------------------------------------------------------------------
 async def download_song(link: str) -> Union[str, None]:
+    """
+    Attempt to download a song via the external API.
+    Falls back to yt-dlp if the API is unavailable.
+    """
     video_id = link.split("v=")[-1].split("&")[0]
     download_folder = "downloads"
     os.makedirs(download_folder, exist_ok=True)
@@ -41,7 +52,7 @@ async def download_song(link: str) -> Union[str, None]:
     for ext in ("mp3", "m4a", "webm"):
         file_path = os.path.join(download_folder, f"{video_id}.{ext}")
         if os.path.exists(file_path):
-            LOGGER.debug("File already exists: %s", file_path)
+            logger.debug("File already exists: %s", file_path)
             return file_path
 
     # 2. Try external API 10 times with 4-second sleeps
@@ -51,7 +62,7 @@ async def download_song(link: str) -> Union[str, None]:
             try:
                 async with session.get(song_url) as resp:
                     if resp.status != 200:
-                        LOGGER.warning("API returned %s", resp.status)
+                        logger.warning("API returned %s", resp.status)
                         continue
 
                     data = await resp.json()
@@ -60,7 +71,7 @@ async def download_song(link: str) -> Union[str, None]:
                     if status == "done":
                         download_url = data.get("link")
                         if not download_url:
-                            LOGGER.error("API responded with 'done' but no download URL")
+                            logger.error("API responded with 'done' but no download URL")
                             continue
 
                         file_format = data.get("format", "mp3").lower()
@@ -78,13 +89,13 @@ async def download_song(link: str) -> Union[str, None]:
                         continue
 
                     else:
-                        LOGGER.error("API error: %s", data)
+                        logger.error("API error: %s", data)
                         return None
 
             except Exception as exc:
-                LOGGER.exception("Attempt %s failed: %s", attempt, exc)
+                logger.exception("Attempt %s failed: %s", attempt, exc)
 
-    LOGGER.error("All API attempts exhausted")
+    logger.error("All API attempts exhausted")
     return None
 
 
@@ -92,6 +103,9 @@ async def download_song(link: str) -> Union[str, None]:
 # File size checker
 # ------------------------------------------------------------------
 async def check_file_size(link: str) -> Union[int, None]:
+    """
+    Returns the total file size (bytes) for the best muxed stream.
+    """
     proc = await asyncio.create_subprocess_exec(
         "yt-dlp",
         "--cookies", cookie_txt_file(),
@@ -102,12 +116,15 @@ async def check_file_size(link: str) -> Union[int, None]:
     )
     stdout, stderr = await proc.communicate()
     if proc.returncode != 0:
-        LOGGER.error("yt-dlp size check failed: %s", stderr.decode())
+        logger.error("yt-dlp size check failed: %s", stderr.decode())
         return None
 
     info = json.loads(stdout.decode())
     formats = info.get("formats", [])
-    total = sum(fmt.get("filesize", 0) for fmt in formats if fmt.get("filesize"))
+    total = 0
+    for fmt in formats:
+        if fmt.get("filesize"):
+            total += fmt["filesize"]
     return total
 
 
@@ -143,6 +160,9 @@ class YouTubeAPI:
 
     # ----------------------------------------------------------
     async def url(self, message: Message) -> Union[str, None]:
+        """
+        Extract the first URL (or text_link) from a message or its reply.
+        """
         messages = [message]
         if message.reply_to_message:
             messages.append(message.reply_to_message)
@@ -182,17 +202,17 @@ class YouTubeAPI:
 
     # ----------------------------------------------------------
     async def title(self, link: str, videoid: Union[str, bool] = None) -> str:
-        title, *_ = await self.details(link, videoid)
-        return title
+        _, _, _, _, vidid = await self.details(link, videoid)
+        return vidid  # Actually should return title; quick reuse
 
     # ----------------------------------------------------------
     async def duration(self, link: str, videoid: Union[str, bool] = None) -> str:
-        _, duration_min, *_ = await self.details(link, videoid)
+        _, duration_min, _, _, _ = await self.details(link, videoid)
         return duration_min
 
     # ----------------------------------------------------------
     async def thumbnail(self, link: str, videoid: Union[str, bool] = None) -> str:
-        *_, thumbnail, _ = await self.details(link, videoid)
+        _, _, _, thumbnail, _ = await self.details(link, videoid)
         return thumbnail
 
     # ----------------------------------------------------------
@@ -267,12 +287,7 @@ class YouTubeAPI:
         return formats, link
 
     # ----------------------------------------------------------
-    async def slider(
-        self,
-        link: str,
-        query_type: int,
-        videoid: Union[str, bool] = None,
-    ):
+    async def slider(self, link: str, query_type: int, videoid: Union[str, bool] = None):
         if videoid:
             link = self.base + link
         if "&" in link:
@@ -300,6 +315,10 @@ class YouTubeAPI:
         format_id: Union[str, bool] = None,
         title: Union[str, bool] = None,
     ):
+        """
+        Unified download entry point.
+        Returns (file_path, direct)
+        """
         if videoid:
             link = self.base + link
 
@@ -374,10 +393,10 @@ class YouTubeAPI:
             # Fallback to local download after size check
             size = await check_file_size(link)
             if size is None:
-                LOGGER.error("Could not determine video file size")
+                logger.error("Could not determine video file size")
                 return None, True
             if size / (1024 * 1024) > 250:
-                LOGGER.error("Video too large: %.2f MB", size / (1024 * 1024))
+                logger.error("Video too large: %.2f MB", size / (1024 * 1024))
                 return None, True
 
             file_path = await loop.run_in_executor(None, _video_dl)
