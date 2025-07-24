@@ -20,6 +20,7 @@ from ERAVIBES.utils.inline import (
     slider_markup,
     track_markup,
 )
+from ERAVIBES import LOGGER
 from ERAVIBES.utils.logger import play_logs
 from ERAVIBES.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
