@@ -1,6 +1,7 @@
 import os, aiohttp, asyncio, shutil
 
 from pyrogram import filters, enums
+from pyrogram.types import Message
 
 from config import API_URL, API_KEY
 from ERAVIBES import YouTube, app
