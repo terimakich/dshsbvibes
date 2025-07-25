@@ -42,7 +42,7 @@ async def chk(_, m: Message):
 
     await wait.edit
         "❖ **ʏσᴜᴛᴜʙє ʜєᴧʟᴛʜʏ** ❖\n\n"
-        f"● **ᴧᴘɪ** ➥  {'✅ ᴧʟɪᴠє' if api_ok else '❌ ᴅσᴡη'}\n\n"
+        f"● **ᴧᴘɪ** ➥  {'✅ ᴧʟɪᴠє' if api_ok else '❌ ᴅσᴡη'}\n"
         f"● **ᴄσσᴋɪєꜱ** ➥  {'✅ ᴡσʀᴋɪηɢ' if ck_ok else '❌ ᴅєᴧᴅ'}",
         parse_mode=enums.ParseMode.MARKDOWN
     )
