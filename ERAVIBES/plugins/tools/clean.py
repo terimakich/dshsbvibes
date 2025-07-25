@@ -25,7 +25,7 @@ TEST = "dQw4w9WgXcQ"
 
 @app.on_message(filters.command("chk") & SUDOERS)
 async def chk(_, m: Message):
-    wait = await m.reply("⏳ **Checking…**", parse_mode=enums.ParseMode.MARKDOWN)
+    wait = await m.reply("⏳ **ᴄʜєᴄᴋɪηɢ. . .**", parse_mode=enums.ParseMode.MARKDOWN)
     api_ok, ck_ok = False, False
 
     # 1. Ping API
@@ -40,8 +40,9 @@ async def chk(_, m: Message):
         ck_ok = await YouTube.exists(TEST, videoid=True)
     except: pass
 
-    await wait.edit(
-        f"❖ **ᴧᴘɪ** ➥  {'✅ ᴧʟɪᴠє' if api_ok else '❌ ᴅσᴡη'}\n"
-        f"❖ **ᴄσσᴋɪєꜱ** ➥  {'✅ ᴡσʀᴋɪηɢ' if ck_ok else '❌ ᴅєᴧᴅ'}",
+    await wait.edit
+        "❖ **ʏσᴜᴛᴜʙє ʜєᴧʟᴛʜʏ** ❖\n\n"
+        f"● **ᴧᴘɪ** ➥  {'✅ ᴧʟɪᴠє' if api_ok else '❌ ᴅσᴡη'}\n\n"
+        f"● **ᴄσσᴋɪєꜱ** ➥  {'✅ ᴡσʀᴋɪηɢ' if ck_ok else '❌ ᴅєᴧᴅ'}",
         parse_mode=enums.ParseMode.MARKDOWN
     )
