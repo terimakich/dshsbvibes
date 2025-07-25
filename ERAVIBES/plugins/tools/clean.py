@@ -22,7 +22,7 @@ async def clean(_, message):
 
 TEST = "dQw4w9WgXcQ"
 
-@app.on_message(filters.command("chk") & & SUDOERS)
+@app.on_message(filters.command("chk") & SUDOERS)
 async def chk(_, m: Message):
     wait = await m.reply("⏳ **Checking…**", parse_mode=enums.ParseMode.MARKDOWN)
     api_ok, ck_ok = False, False
