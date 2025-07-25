@@ -1,13 +1,4 @@
-# -*- coding: utf-8 -*-
-
-import asyncio
-import aiohttp
-import os
-import re
-import json
-import random
-import glob
-import logging
+import asyncio, aiohttp, os, re, json, random, glob, logging
 from typing import Union, Tuple
 
 import yt_dlp
@@ -15,22 +6,13 @@ from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch
 
-# ERAVIBES utilities aur config se import karein
 from ERAVIBES.utils.database import is_on_off
 from ERAVIBES.utils.formatters import time_to_seconds
 from config import API_URL, API_KEY
 
-
-# Global caching for video info
-_info_cache = {}  # Cache ke liye: { link: info }
-
-# --- Helper Functions ---
+_info_cache = {}
 
 def cookie_txt_file():
-    """
-    Cookies folder se randomly ek cookie file select karta hai.
-    Yeh user dwara provide kiya gaya updated function hai.
-    """
     cookie_dir = f"{os.getcwd()}/cookies"
     
     if not os.path.exists(cookie_dir):
@@ -45,9 +27,6 @@ def cookie_txt_file():
     return cookie_file
 
 def extract_video_info(link: str) -> dict:
-    """
-    yt-dlp ka use karke video ki info extract karta hai aur use cache karta hai.
-    """
     if link in _info_cache:
         return _info_cache[link]
     
@@ -62,28 +41,21 @@ def extract_video_info(link: str) -> dict:
     return info
 
 async def api_download_song(video_id: str) -> Union[str, None]:
-    """
-    API ka use karke song download karne ka naya function.
-    """
     download_folder = "downloads"
     os.makedirs(download_folder, exist_ok=True)
 
-    # Check if file already exists
     for ext in ["mp3", "m4a", "webm"]:
         file_path = os.path.join(download_folder, f"{video_id}.{ext}")
         if os.path.exists(file_path):
-            print(f"File already exists: {file_path}")
             return file_path
             
     song_url = f"{API_URL}/song/{video_id}?api={API_KEY}"
     
     async with aiohttp.ClientSession() as session:
-        # API ko poll karke download link ka wait karein
-        for attempt in range(10): # Max 10 retries
+        for attempt in range(10):
             try:
                 async with session.get(song_url) as response:
                     if response.status != 200:
-                        print(f"API request failed with status code {response.status}")
                         await asyncio.sleep(4)
                         continue
                     
@@ -93,10 +65,8 @@ async def api_download_song(video_id: str) -> Union[str, None]:
                     if status == "done":
                         download_url = data.get("link")
                         if not download_url:
-                            print("API response did not provide a download URL.")
                             return None
                         
-                        # File download karein
                         file_format = data.get("format", "mp3").lower()
                         file_name = f"{video_id}.{file_format}"
                         file_path = os.path.join(download_folder, file_name)
@@ -109,27 +79,18 @@ async def api_download_song(video_id: str) -> Union[str, None]:
                                         if not chunk:
                                             break
                                         f.write(chunk)
-                                print(f"File downloaded successfully: {file_path}")
                                 return file_path
                             else:
-                                print(f"Failed to download file from {download_url}")
                                 return None
 
                     elif status == "downloading":
-                        print(f"Song is downloading... attempt {attempt + 1}")
                         await asyncio.sleep(4)
                     else:
-                        error_msg = data.get("error") or data.get("message", "Unknown API error")
-                        print(f"API error: {error_msg}")
                         return None
-            except Exception as e:
-                print(f"An error occurred during API call: {e}")
+            except Exception:
                 return None
         else:
-            print("Max retries reached. API download failed.")
             return None
-
-# --- Main YouTubeAPI Class ---
 
 class YouTubeAPI:
     def __init__(self):
@@ -238,7 +199,6 @@ class YouTubeAPI:
             vid_id = link
             link = self.base + link
         else:
-            # Link se video ID extract karein
             match = re.search(r"(?:v=|\/|youtu\.be\/)([0-9A-Za-z_-]{11})", link)
             if match:
                 vid_id = match.group(1)
@@ -246,7 +206,6 @@ class YouTubeAPI:
         loop = asyncio.get_running_loop()
 
         def song_dl(is_video: bool):
-            """Generic function for song audio/video download using yt-dlp."""
             fpath = f"downloads/{title}"
             formats_opt = f"{format_id}+140" if is_video else format_id
             
@@ -278,18 +237,14 @@ class YouTubeAPI:
             await loop.run_in_executor(None, song_dl, False)
             return f"downloads/{title}.mp3", True
         
-        # --- Audio/Video Download Logic ---
         downloaded_file = None
-        direct = True # Assume direct path for downloaded files
+        direct = True
 
-        # Audio download (default action)
         if not video:
             if vid_id:
-                print(f"Attempting to download audio via API for video ID: {vid_id}")
                 downloaded_file = await api_download_song(vid_id)
             
             if not downloaded_file:
-                print("API download failed or skipped. Falling back to yt-dlp for audio.")
                 def audio_dl_fallback():
                     ydl_opts = {
                         "format": "bestaudio/best",
@@ -309,9 +264,7 @@ class YouTubeAPI:
                         return fpath
                 downloaded_file = await loop.run_in_executor(None, audio_dl_fallback)
         
-        # Video download
         else:
-            print("Downloading video using yt-dlp.")
             def video_dl():
                 ydl_opts = {
                     "format": "(bestvideo[height<=?720][width<=?1280][ext=mp4])+(bestaudio[ext=m4a])",
