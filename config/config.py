@@ -51,7 +51,7 @@ GPT_API = getenv("GPT_API", None)
 
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/IamDuru/dshsbvibes",
+    "https://github.com/terimakich/dshsbvibes",
 )
 
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
@@ -60,8 +60,8 @@ GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )  #❖ Fill this variable if your upstream repository is private
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/net_pro_max")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+cXIPgHSuJnxiNjU1")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/THE_INCRRICIBLE")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/TEAMINCRICIBLE")
 
 #❖ Set it in True if you want to leave your assistant after a certain amount of time. [Set time via AUTO_LEAVE_ASSISTANT_TIME]
 AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", "True")
@@ -87,7 +87,7 @@ TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", 1073741824))
 
 
 API_URL = getenv("API_URL", 'https://api.thequickearn.xyz') #youtube song url
-API_KEY = getenv("API_KEY", None) # youtube song api key
+API_KEY = getenv("API_KEY", '30DxNexGenBots6d066c') # youtube song api key
 
 
 # Set it true if you want your bot to be private only [You'll need to allow CHAT_ID via /authorize command then only your bot will play music in that chat.]
